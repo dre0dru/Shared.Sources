@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Shared.Sources.ScriptableDatabase
@@ -25,7 +26,7 @@ namespace Shared.Sources.ScriptableDatabase
 
         private KeyToDatabaseMap<TKey, TValue> _keyToDatabaseMap;
 
-        public override IEnumerable<TKey> Keys => _keyToDatabaseMap.Keys;
+        public override IEnumerable<TKey> Keys => _keyToDatabaseMap?.Keys ?? Enumerable.Empty<TKey>();
 
         private void Awake()
         {
