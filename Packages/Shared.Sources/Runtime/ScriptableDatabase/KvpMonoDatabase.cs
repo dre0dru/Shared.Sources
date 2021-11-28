@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace Shared.Sources.ScriptableDatabase
 {
-    //TODO maybe create instance class and pass there instance on Awake?
     public class KvpMonoDatabase<TKey, TValue> : MonoDatabase<TKey, TValue>
     {
         [SerializeField]
@@ -15,8 +14,13 @@ namespace Shared.Sources.ScriptableDatabase
 
         public override IEnumerable<TKey> Keys => _keysMap.Keys;
 
-        private void Awake() =>
-            _keysMap = _keysToValues.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+        private void Awake()
+        {
+            if (_keysToValues != null)
+            {
+                _keysMap = _keysToValues.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            }
+        }
 
         public override TValue Get(TKey key) =>
             _keysMap[key];
@@ -28,7 +32,7 @@ namespace Shared.Sources.ScriptableDatabase
             _keysMap.ContainsKey(key);
 
         #if UNITY_EDITOR
-        public override void AddOrUpdate(TKey key, TValue value)
+        public void AddOrUpdate(TKey key, TValue value)
         {
             var idx = _keysToValues.FindIndex(kvp => kvp.Key.Equals(key));
 
@@ -40,7 +44,7 @@ namespace Shared.Sources.ScriptableDatabase
             {
                 idx = _keysToValues.Count - 1;
             }
-            
+
             _keysToValues.Insert(idx, new Kvp<TKey, TValue>()
             {
                 Key = key,
@@ -48,7 +52,7 @@ namespace Shared.Sources.ScriptableDatabase
             });
         }
 
-        public override bool Remove(TKey key)
+        public bool Remove(TKey key)
         {
             var idx = _keysToValues.FindIndex(kvp => kvp.Key.Equals(key));
 
