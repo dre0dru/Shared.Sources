@@ -12,7 +12,7 @@ namespace Shared.Sources.ScriptableDatabase
 
         private Dictionary<TKey, TValue> _keysMap;
 
-        public override IEnumerable<TKey> Keys => _keysMap.Keys;
+        public override IEnumerable<TKey> Keys => _keysMap?.Keys ?? Enumerable.Empty<TKey>();
 
         private void Awake()
         {

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Shared.Sources.ScriptableDatabase
@@ -32,7 +33,7 @@ namespace Shared.Sources.ScriptableDatabase
             }
         }
 
-        public override IEnumerable<TKey> Keys => _keyToDatabaseMap.Keys;
+        public override IEnumerable<TKey> Keys => _keyToDatabaseMap?.Keys ?? Enumerable.Empty<TKey>();
 
         public override TValue Get(TKey key) =>
             _keyToDatabaseMap[key].Get(key);
