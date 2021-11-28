@@ -15,7 +15,6 @@ namespace Shared.Sources.Editor
     public class FolderReferencePropertyDrawer : PropertyDrawer
     {
         private const string GuidProperty = "GUID";
-        private const string Label = "Folder";
 
         private DefaultAsset _targetFolder;
 
@@ -36,7 +35,8 @@ namespace Shared.Sources.Editor
             position.y += propertyHeight;
 
             _targetFolder =
-                (DefaultAsset)EditorGUI.ObjectField(propertyRect, Label, _targetFolder, typeof(DefaultAsset), false);
+                (DefaultAsset)EditorGUI.ObjectField(propertyRect, property.displayName, _targetFolder,
+                    typeof(DefaultAsset), false);
 
             if (_targetFolder != null)
             {
