@@ -13,16 +13,9 @@ namespace Shared.Sources.ScriptableDatabase
         public abstract bool TryGet(TKey key, out TValue value);
 
         public abstract bool ContainsKey(TKey key);
-
-        #if UNITY_EDITOR
-        public abstract void AddOrUpdate(TKey key, TValue value);
-
-        public abstract bool Remove(TKey key);
-        #endif
     }
 
-    public class MonoDatabaseComposite<TKey, TValue> : MonoBehaviour,
-        IScriptableDatabase<TKey, TValue>
+    public class MonoDatabaseComposite<TKey, TValue> : MonoDatabase<TKey, TValue>
     {
         [SerializeField]
         protected List<ScriptableDatabase<TKey, TValue>> _scriptableDatabases;
@@ -32,23 +25,29 @@ namespace Shared.Sources.ScriptableDatabase
 
         private KeyToDatabaseMap<TKey, TValue> _keyToDatabaseMap;
 
-        public IEnumerable<TKey> Keys => _keyToDatabaseMap.Keys;
+        public override IEnumerable<TKey> Keys => _keyToDatabaseMap.Keys;
 
         private void Awake()
         {
             _keyToDatabaseMap = new KeyToDatabaseMap<TKey, TValue>();
-            
-            _keyToDatabaseMap.FillFromDatabases(_scriptableDatabases);
-            _keyToDatabaseMap.FillFromDatabases(_monoDatabases);
+
+            if (_scriptableDatabases != null)
+            {
+                _keyToDatabaseMap.FillFromDatabases(_scriptableDatabases);
+            }
+            if (_monoDatabases != null)
+            {
+                _keyToDatabaseMap.FillFromDatabases(_monoDatabases);
+            }
         }
 
-        public TValue Get(TKey key) =>
+        public override TValue Get(TKey key) =>
             _keyToDatabaseMap[key].Get(key);
 
-        public bool TryGet(TKey key, out TValue value) =>
+        public override bool TryGet(TKey key, out TValue value) =>
             _keyToDatabaseMap[key].TryGet(key, out value);
 
-        public bool ContainsKey(TKey key) =>
+        public override bool ContainsKey(TKey key) =>
             _keyToDatabaseMap[key].ContainsKey(key);
 
         #if UNITY_EDITOR
@@ -57,6 +56,12 @@ namespace Shared.Sources.ScriptableDatabase
 
         public bool RemoveDatabase(ScriptableDatabase<TKey, TValue> scriptableDatabase) =>
             _scriptableDatabases.Remove(scriptableDatabase);
+        
+        public void AddDatabase(MonoDatabase<TKey, TValue> monoDatabase) =>
+            _monoDatabases.Add(monoDatabase);
+
+        public bool RemoveDatabase(MonoDatabase<TKey, TValue> monoDatabase) =>
+            _monoDatabases.Remove(monoDatabase);
         #endif
     }
 }

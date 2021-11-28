@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Shared.Sources.ScriptableDatabase
 {
-    //TODO это ведь по сути врраппер над dictionary, может тупо сделать внутри дикт, сделать, чтобы он в Awake создавался и все
     public abstract class ScriptableDatabase<TKey, TValue> : ScriptableObject,
         IScriptableDatabase<TKey, TValue>
     {
@@ -15,16 +13,9 @@ namespace Shared.Sources.ScriptableDatabase
         public abstract bool TryGet(TKey key, out TValue value);
 
         public abstract bool ContainsKey(TKey key);
-
-        #if UNITY_EDITOR
-        public abstract void AddOrUpdate(TKey key, TValue value);
-
-        public abstract bool Remove(TKey key);
-        #endif
     }
 
-    public class ScriptableDatabaseComposite<TKey, TValue> : ScriptableObject,
-        IScriptableDatabase<TKey, TValue>
+    public class ScriptableDatabaseComposite<TKey, TValue> : ScriptableDatabase<TKey, TValue>
     {
         [SerializeField]
         protected List<ScriptableDatabase<TKey, TValue>> _scriptableDatabases;
@@ -35,18 +26,21 @@ namespace Shared.Sources.ScriptableDatabase
         {
             _keyToDatabaseMap = new KeyToDatabaseMap<TKey, TValue>();
             
-            _keyToDatabaseMap.FillFromDatabases(_scriptableDatabases);
+            if (_scriptableDatabases != null)
+            {
+                _keyToDatabaseMap.FillFromDatabases(_scriptableDatabases);
+            }
         }
 
-        public IEnumerable<TKey> Keys => _keyToDatabaseMap.Keys;
+        public override IEnumerable<TKey> Keys => _keyToDatabaseMap.Keys;
 
-        public TValue Get(TKey key) =>
+        public override TValue Get(TKey key) =>
             _keyToDatabaseMap[key].Get(key);
 
-        public bool TryGet(TKey key, out TValue value) =>
+        public override bool TryGet(TKey key, out TValue value) =>
             _keyToDatabaseMap[key].TryGet(key, out value);
 
-        public bool ContainsKey(TKey key) =>
+        public override bool ContainsKey(TKey key) =>
             _keyToDatabaseMap[key].ContainsKey(key);
 
         #if UNITY_EDITOR
