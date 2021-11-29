@@ -38,7 +38,8 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0",
-    "com.cysharp.unitask": "2.2.5"
+    "com.cysharp.unitask": "2.2.5",
+    "jp.hadashikick.vcontainer": "1.9.0"
   },
   "scopedRegistries": [
     {
@@ -47,7 +48,8 @@
       "scopes": [
         "com.cysharp.unitask",
         "com.demigiant.dotween",
-        "com.openupm"
+        "com.openupm",
+        "jp.hadashikick.vcontainer"
       ]
     }
   ]
