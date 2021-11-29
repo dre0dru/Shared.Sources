@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Shared.Sources.ScriptableDatabase
@@ -26,30 +25,31 @@ namespace Shared.Sources.ScriptableDatabase
 
         private KeyToDatabaseMap<TKey, TValue> _keyToDatabaseMap;
 
-        public override IEnumerable<TKey> Keys => _keyToDatabaseMap?.Keys ?? Enumerable.Empty<TKey>();
+        public override IEnumerable<TKey> Keys => KeyToDatabaseMap.Keys;
 
-        private void Awake()
-        {
-            _keyToDatabaseMap = new KeyToDatabaseMap<TKey, TValue>();
-
-            if (_scriptableDatabases != null)
-            {
-                _keyToDatabaseMap.FillFromDatabases(_scriptableDatabases);
-            }
-            if (_monoDatabases != null)
-            {
-                _keyToDatabaseMap.FillFromDatabases(_monoDatabases);
-            }
-        }
+        private KeyToDatabaseMap<TKey, TValue> KeyToDatabaseMap => GetOrCreateKeysMap();
 
         public override TValue Get(TKey key) =>
-            _keyToDatabaseMap[key].Get(key);
+            KeyToDatabaseMap[key].Get(key);
 
         public override bool TryGet(TKey key, out TValue value) =>
-            _keyToDatabaseMap[key].TryGet(key, out value);
+            KeyToDatabaseMap[key].TryGet(key, out value);
 
         public override bool ContainsKey(TKey key) =>
-            _keyToDatabaseMap[key].ContainsKey(key);
+            KeyToDatabaseMap[key].ContainsKey(key);
+        
+        private KeyToDatabaseMap<TKey, TValue> GetOrCreateKeysMap()
+        {
+            if (_keyToDatabaseMap == null)
+            {
+                _keyToDatabaseMap = new KeyToDatabaseMap<TKey, TValue>();
+                
+                _keyToDatabaseMap.FillFromDatabases(_scriptableDatabases);
+                _keyToDatabaseMap.FillFromDatabases(_monoDatabases);
+            }
+
+            return _keyToDatabaseMap;
+        }
 
         #if UNITY_EDITOR
         public void AddDatabase(ScriptableDatabase<TKey, TValue> scriptableDatabase) =>
