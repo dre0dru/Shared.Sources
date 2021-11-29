@@ -12,24 +12,28 @@ namespace Shared.Sources.ScriptableDatabase
 
         private Dictionary<TKey, TValue> _keysMap;
 
-        public override IEnumerable<TKey> Keys => _keysMap?.Keys ?? Enumerable.Empty<TKey>();
+        public override IEnumerable<TKey> Keys => KeysMap.Keys;
 
-        private void Awake()
+        private Dictionary<TKey, TValue> KeysMap => GetOrCreateKeysMap();
+
+        public override TValue Get(TKey key) =>
+            KeysMap[key];
+
+        public override bool TryGet(TKey key, out TValue value) =>
+            KeysMap.TryGetValue(key, out value);
+
+        public override bool ContainsKey(TKey key) =>
+            KeysMap.ContainsKey(key);
+
+        private Dictionary<TKey, TValue> GetOrCreateKeysMap()
         {
-            if (_keysToValues != null)
+            if (_keysMap == null)
             {
                 _keysMap = _keysToValues.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             }
+
+            return _keysMap;
         }
-
-        public override TValue Get(TKey key) =>
-            _keysMap[key];
-
-        public override bool TryGet(TKey key, out TValue value) =>
-            _keysMap.TryGetValue(key, out value);
-
-        public override bool ContainsKey(TKey key) =>
-            _keysMap.ContainsKey(key);
 
         #if UNITY_EDITOR
         public void AddOrUpdate(TKey key, TValue value)
