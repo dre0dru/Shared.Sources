@@ -27,6 +27,11 @@
             "define": "ADDRESSABLES_SUPPORT"
         },
         {
+            "name": "com.unity.addressables",
+            "expression": "1.19",
+            "define": "ADDRESSABLES_SUPPORT_1_19"
+        },
+        {
             "name": "com.cysharp.unitask",
             "expression": "",
             "define": "UNITASK_SUPPORT"

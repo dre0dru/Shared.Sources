@@ -16,15 +16,18 @@ namespace Shared.Sources.SceneLoaders
         IEnumerable<string> LoadedScenesNames { get; }
 
         void SetSceneActive(string sceneName);
-        
-        UniTask LoadSceneAsync(string sceneName, LoadSceneMode loadSceneMode, IProgress<float> progress = null, bool makeActive = false);
+
+        UniTask LoadSceneAsync(string sceneName, LoadSceneMode loadSceneMode, IProgress<float> progress = null,
+            bool makeActive = false);
 
         #if VCONTAINER_SUPPORT
-        UniTask LoadSceneAsyncWithExtraBindings(string sceneName, LoadSceneMode loadSceneMode, Action<IContainerBuilder> extraBindings,
+        UniTask LoadSceneAsyncWithExtraBindings(string sceneName, LoadSceneMode loadSceneMode,
+            Action<IContainerBuilder> extraBindings,
             IProgress<float> progress = null, bool makeActive = false);
         #endif
-        
-        UniTask UnloadSceneAsync(string sceneName, IProgress<float> progress = null);
+
+        UniTask UnloadSceneAsync(string sceneName, UnloadSceneOptions unloadSceneOptions = UnloadSceneOptions.None,
+            IProgress<float> progress = null);
     }
 }
 
