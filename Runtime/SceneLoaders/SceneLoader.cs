@@ -60,9 +60,9 @@ namespace Shared.Sources.SceneLoaders
         }
         #endif
 
-        public UniTask UnloadSceneAsync(string sceneName, IProgress<float> progress = null)
+        public UniTask UnloadSceneAsync(string sceneName, UnloadSceneOptions unloadSceneOptions = UnloadSceneOptions.None, IProgress<float> progress = null)
         {
-            return SceneManager.UnloadSceneAsync(sceneName).ToUniTask(progress);
+            return SceneManager.UnloadSceneAsync(sceneName, UnloadSceneOptions.None).ToUniTask(progress);
         }
     }
 }

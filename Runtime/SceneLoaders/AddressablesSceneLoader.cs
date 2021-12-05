@@ -68,18 +68,23 @@ namespace Shared.Sources.SceneLoaders
         }
         #endif
 
-        public UniTask UnloadSceneAsync(string sceneName, IProgress<float> progress = null)
+        public UniTask UnloadSceneAsync(string sceneName, UnloadSceneOptions unloadSceneOptions = UnloadSceneOptions.None,
+            IProgress<float> progress = null)
         {
             if (IsBuildSettingsScene(sceneName))
             {
-                return _sceneLoader.UnloadSceneAsync(sceneName, progress);
+                return _sceneLoader.UnloadSceneAsync(sceneName, unloadSceneOptions, progress);
             }
 
             var sceneHandle = _addressablesScenes[sceneName];
 
             _addressablesScenes.Remove(sceneName);
 
+            #if ADDRESSABLES_SUPPORT_1_19
+            return Addressables.UnloadSceneAsync(sceneHandle, unloadSceneOptions, true).ToUniTask(progress);
+            #else
             return Addressables.UnloadSceneAsync(sceneHandle, true).ToUniTask(progress);
+            #endif
         }
 
         private HashSet<string> GetBuildSettingsScenes()
