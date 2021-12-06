@@ -2,7 +2,7 @@ name: Semantic Release Dry Run
 on: [workflow_dispatch]
 jobs:
   release:
-    name: release
+    name: semantic_release_dry_run
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
