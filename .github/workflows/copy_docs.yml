@@ -1,10 +1,11 @@
 name: Copy Docs
 on:
-  - workflow_dispatch
-  - push:
-      paths:
-        - 'Packages/Shared.Sources/README.md'
-        - 'Packages/Shared.Sources/LICENSE.md'
+  push:
+    branches:
+      - master
+    paths:
+      - 'Packages/Shared.Sources/README.md'
+      - 'Packages/Shared.Sources/LICENSE.md'
 jobs:
   copy-docs-job:
     runs-on: ubuntu-latest
