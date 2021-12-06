@@ -5,7 +5,7 @@
 This package can be installed as a Unity package from git url.
 
 ### Latest release
-- Adding following line in `Packages/manifest.json`:
+- Add following line in `Packages/manifest.json`:
 ```
 "com.dre0dru.shared.sources": "https://github.com/dre0dru/Shared.Sources.git#upm",
 ```
