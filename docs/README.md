@@ -36,3 +36,6 @@ https://github.com/dre0dru/Shared.Sources.git?path=/Packages/Shared.Sources
 
 ## Editor
 > TODO
+
+# License
+The software released under the terms of the [MIT license](./LICENSE.md).
