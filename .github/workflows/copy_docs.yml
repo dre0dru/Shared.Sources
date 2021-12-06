@@ -1,5 +1,6 @@
 name: Copy Docs
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
