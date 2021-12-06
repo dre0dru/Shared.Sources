@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/dre0dru/Shared.Sources/compare/v1.0.0...v1.0.1) (2021-12-06)
+
+
+### Bug Fixes
+
+* added missing vcontainer directive ([2bf0709](https://github.com/dre0dru/Shared.Sources/commit/2bf07098c4438266535989dcf28e22990de3431d))
+
 # 1.0.0 (2021-12-06)
 
 
