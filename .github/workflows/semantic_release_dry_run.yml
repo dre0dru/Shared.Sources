@@ -10,7 +10,7 @@ jobs:
         fetch-depth: 0
     - name: Semantic release
       id: semantic
-      uses: cycjimmy/semantic-release-action@v2.5.3
+      uses: cycjimmy/semantic-release-action@v2
       with:
         dry_run: true
         extra_plugins: |
@@ -19,3 +19,7 @@ jobs:
         branch: master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Output info
+      run: |
+        echo ${{ steps.semantic.outputs.new_release_published }}
+        echo ${{ steps.semantic.outputs.new_release_version }}
