@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
+#if VCONTAINER_SUPPORT
 using VContainer;
+#endif
 
 namespace Shared.Sources.SceneLoaders
 {
