@@ -8,7 +8,6 @@ using VContainer;
 
 namespace Shared.Sources.SceneLoaders
 {
-    //TODO make unitask support conditional
     public interface ISceneLoader
     {
         int LoadedScenesCount { get; }
