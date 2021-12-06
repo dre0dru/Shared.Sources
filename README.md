@@ -1,1 +1,0 @@
-"com.dre0dru.shared.sources": "https://github.com/dre0dru/Shared.Sources.git?path=/Packages/Shared.Sources"
