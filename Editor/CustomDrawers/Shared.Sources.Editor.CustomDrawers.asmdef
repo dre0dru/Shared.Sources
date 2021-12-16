@@ -1,8 +1,12 @@
 {
-    "name": "Shared.Sources.Collections",
+    "name": "Shared.Sources.Editor.CustomDrawers",
     "rootNamespace": "Shared.Sources",
-    "references": [],
-    "includePlatforms": [],
+    "references": [
+        "GUID:fd5f941de35185746a53d8989ff12e91"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

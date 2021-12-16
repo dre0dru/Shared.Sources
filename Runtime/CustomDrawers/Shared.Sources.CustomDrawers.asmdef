@@ -1,5 +1,5 @@
 {
-    "name": "Shared.Sources.Collections",
+    "name": "Shared.Sources.CustomDrawers",
     "rootNamespace": "Shared.Sources",
     "references": [],
     "includePlatforms": [],
