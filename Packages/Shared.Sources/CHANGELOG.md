@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/dre0dru/Shared.Sources/compare/v1.0.1...v1.1.0) (2021-12-16)
+
+
+### Features
+
+* added constant string popup drawer ([c605801](https://github.com/dre0dru/Shared.Sources/commit/c605801fd00cb5e16ba7cfefc5942bd004afb49e))
+
 ## [1.0.1](https://github.com/dre0dru/Shared.Sources/compare/v1.0.0...v1.0.1) (2021-12-06)
 
 
