@@ -1,13 +1,16 @@
 {
     "name": "Shared.Sources.Editor",
     "rootNamespace": "Shared.Sources",
-    "references": [],
+    "references": [
+        "GUID:fd5f941de35185746a53d8989ff12e91",
+        "GUID:ed27a03d91d1b074dbc6bc2bc16ab73a"
+    ],
     "includePlatforms": [
         "Editor"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": true,
+    "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
