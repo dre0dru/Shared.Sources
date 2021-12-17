@@ -5,7 +5,7 @@ using Shared.Sources.CustomDrawers;
 using UnityEditor;
 using UnityEngine;
 
-namespace Shared.Sources.Editor.CustomDrawers
+namespace Shared.Sources.Editor.Drawers
 {
     [CustomPropertyDrawer(typeof(ConstantStringAttribute))]
     public class ConstantStringDrawer : PropertyDrawer
@@ -44,7 +44,7 @@ namespace Shared.Sources.Editor.CustomDrawers
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return base.GetPropertyHeight(property, label) * 2 + 1;
+            return base.GetPropertyHeight(property, label) * 2 + EditorGUIUtility.standardVerticalSpacing;
         }
 
         private void DrawPopup(Rect position, SerializedProperty property, int currentIndex, string[] options)
