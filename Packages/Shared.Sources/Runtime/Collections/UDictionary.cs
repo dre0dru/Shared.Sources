@@ -10,10 +10,11 @@ using UnityEngine;
 namespace Shared.Sources.Collections
 {
     [Serializable]
-    public class UDictionary<TKey, TValue> : IDictionary<TKey, TValue>, ISerializationCallbackReceiver
+    public class UDictionary<TKey, TValue, TKvp> : IDictionary<TKey, TValue>, ISerializationCallbackReceiver
+        where TKvp : IKvp<TKey, TValue>, new()
     {
         [SerializeField]
-        private List<Kvp<TKey, TValue>> _serialized = new List<Kvp<TKey, TValue>>();
+        private List<TKvp> _serialized = new List<TKvp>();
 
         private Dictionary<TKey, TValue> _runtimeDictionary;
 
@@ -54,7 +55,7 @@ namespace Shared.Sources.Collections
             Dictionary.Add(key, value);
 
             #if UNITY_EDITOR
-            _serialized.Add(new Kvp<TKey, TValue>()
+            _serialized.Add(new TKvp()
             {
                 Key = key,
                 Value = value
@@ -154,6 +155,7 @@ namespace Shared.Sources.Collections
         {
             #if UNITY_EDITOR
             _hasCollisions = CheckForCollisions();
+            _runtimeDictionary = null;
             #endif
         }
 
@@ -162,7 +164,7 @@ namespace Shared.Sources.Collections
         {
             if (TryFindListIndexByKey(key, out var index))
             {
-                _serialized[index] = new Kvp<TKey, TValue>()
+                _serialized[index] = new TKvp()
                 {
                     Key = key,
                     Value = value
@@ -170,7 +172,7 @@ namespace Shared.Sources.Collections
             }
             else
             {
-                _serialized.Add(new Kvp<TKey, TValue>()
+                _serialized.Add(new TKvp()
                 {
                     Key = key,
                     Value = value
@@ -185,7 +187,7 @@ namespace Shared.Sources.Collections
             return index != -1;
         }
 
-        private bool CheckForCollisions()
+        public bool CheckForCollisions()
         {
             var hashSet = new HashSet<TKey>();
 
@@ -200,5 +202,11 @@ namespace Shared.Sources.Collections
             return false;
         }
         #endif
+    }
+
+    [Serializable]
+    public class UDictionary<TKey, TValue> : UDictionary<TKey, TValue, Kvp<TKey, TValue>>
+    {
+        
     }
 }

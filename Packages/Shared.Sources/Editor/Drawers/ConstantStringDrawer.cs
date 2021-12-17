@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Shared.Sources.CustomDrawers;
@@ -10,44 +11,109 @@ namespace Shared.Sources.Editor.Drawers
     [CustomPropertyDrawer(typeof(ConstantStringAttribute))]
     public class ConstantStringDrawer : PropertyDrawer
     {
+        protected string[] _constants;
+        protected float LineHeight => EditorGUIUtility.singleLineHeight;
+        protected float VerticalSpacing => EditorGUIUtility.standardVerticalSpacing;
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var attr = attribute as ConstantStringAttribute;
-            var source = attr.Source;
+            var attr = GetPropertyAttribute();
+
+            InitConstants(attr.Source, attr.Flatten);            
+
+            var popupRect = new Rect(position)
+            {
+                height = LineHeight,
+            };
+
+            DrawStringPopup(popupRect, property, _constants);
+
+            var keyRect = new Rect(position)
+            {
+                height = LineHeight,
+                y = GetNextPropertyPosY(popupRect)
+            };
+
+            EditorGUI.PropertyField(keyRect, property, GUIContent.none);
+        }
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            return LineHeight * 2 + VerticalSpacing;;
+        }
+
+        protected void InitConstants(Type source, bool flatten)
+        {
+            _constants ??= GetConstantsTree(source, flatten);
+        }
+
+        protected ConstantStringAttribute GetPropertyAttribute()
+        {
+            return attribute as ConstantStringAttribute;
+        }
+
+        protected string[] GetConstantsTree(Type type, bool flatten)
+        {
+            var result = new List<string>();
+
+            result.AddRange(GetTypeConstants(type));
+
+            var nestedTypes = type.GetNestedTypes(BindingFlags.Public | BindingFlags.Static);
+
+            if (nestedTypes.Length > 0)
+            {
+                foreach (var nestedType in nestedTypes)
+                {
+                    var constants = GetConstantsTree(nestedType, flatten);
+                    
+                    if (flatten)
+                    {
+                        result.AddRange(constants);
+                    }
+                    else
+                    {
+                        result.AddRange(constants.Select(s => $"{nestedType.Name}/{s}"));
+                    }
+                }
+            }
             
-            var constants = GetConstants(attr.Source);
+            return result.ToArray();
+        }
 
-            var popupRect = new Rect(position);
-            popupRect.height /= 2;
+        protected IEnumerable<string> GetTypeConstants(Type type)
+        {
+            return type.GetFields(BindingFlags.Public | BindingFlags.Static)
+                .Where(info => info.IsLiteral && !info.IsInitOnly)
+                .Select(info => (string)info.GetRawConstantValue());
+        }
+        
+        protected float GetNextPropertyPosY(Rect previousRect) =>
+            previousRect.y + previousRect.height + VerticalSpacing;
 
+        protected void DrawStringPopup(Rect popupRect, SerializedProperty property, string[] options)
+        {
             var currentValue = property.stringValue;
-            var currentIndex = Array.IndexOf<string>(constants, currentValue);
+            var currentIndex = Array.IndexOf<string>(options, currentValue);
 
             if (currentIndex == -1)
             {
                 var popupRectLeft = new Rect(popupRect);
                 popupRectLeft.width /= 2;
-                
-                DrawPopup(popupRectLeft, property, currentIndex, constants);
+
+                DrawPopup(popupRectLeft, property, currentIndex, options);
 
                 var popupRectRight = new Rect(popupRectLeft);
                 popupRectRight.x += popupRectRight.width;
-                EditorGUI.HelpBox(popupRectRight, $"No matching value selected from [{source.Name}]", MessageType.Error);
+                EditorGUI.HelpBox(popupRectRight, "No matching value selected",
+                    MessageType.Error);
             }
             else
             {
-                DrawPopup(popupRect, property, currentIndex, constants);
+                DrawPopup(popupRect, property, currentIndex, options);
             }
-            
-            DrawPropertyField(position, property, label);
         }
-
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-            return base.GetPropertyHeight(property, label) * 2 + EditorGUIUtility.standardVerticalSpacing;
-        }
-
-        private void DrawPopup(Rect position, SerializedProperty property, int currentIndex, string[] options)
+        
+        protected void DrawPopup(Rect position, SerializedProperty property, int currentIndex, string[] options)
         {
             var popupIndex = EditorGUI.Popup(position, property.displayName, currentIndex, options);
 
@@ -56,23 +122,6 @@ namespace Shared.Sources.Editor.Drawers
                 var selectedValue = options[popupIndex];
                 property.stringValue = selectedValue;
             }
-        }
-
-        private void DrawPropertyField(Rect position, SerializedProperty property, GUIContent label)
-        {
-            var propertyRect = new Rect(position);
-            propertyRect.height /= 2;
-            propertyRect.y += propertyRect.height + 1;
-
-            EditorGUI.PropertyField(propertyRect, property, label);
-        }
-
-        private string[] GetConstants(Type type)
-        {
-            return type.GetFields(BindingFlags.Public | BindingFlags.Static)
-                .Where(info => info.IsLiteral && !info.IsInitOnly)
-                .Select(info => (string)info.GetRawConstantValue())
-                .ToArray();
         }
     }
 }
