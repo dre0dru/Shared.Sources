@@ -30,6 +30,14 @@ namespace Shared.Sources.SceneLoaders
                 return scenesNames;
             }
         }
+        
+        #if UNITY_2020_3_OR_NEWER
+        [UnityEngine.Scripting.RequiredMember]
+        #endif
+        public SceneLoader()
+        {
+        
+        }
 
         public void SetSceneActive(string sceneName)
         {

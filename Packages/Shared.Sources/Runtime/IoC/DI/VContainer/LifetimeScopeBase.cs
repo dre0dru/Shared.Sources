@@ -9,19 +9,19 @@ namespace Shared.Sources.IoC.DI.VContainer
     public class LifetimeScopeBase : LifetimeScope
     {
         [SerializeField]
-        private MonoLifetimeScope[] _monoLifetimeScopes;
+        private MonoInstaller[] _monoInstallers;
 
         [SerializeField]
-        private ScriptableLifetimeScope[] _scriptableLifetimeScopes;
+        private ScriptableInstaller[] _scriptableInstallers;
 
         protected override void Configure(IContainerBuilder builder)
         {
-            foreach (var scope in _monoLifetimeScopes)
+            foreach (var scope in _monoInstallers)
             {
                 scope.Install(builder);
             }
 
-            foreach (var scope in _scriptableLifetimeScopes)
+            foreach (var scope in _scriptableInstallers)
             {
                 scope.Install(builder);
             }

@@ -2,6 +2,8 @@ using System;
 using Shared.Sources.Collections;
 using UnityEngine;
 
+//TODO try default drawer, but also add another attribute that can be placed on a field that contains kvp
+//Search for source type there
 [Serializable]
 public class StringKvp<TValue> : IKvp<string, TValue>
 {

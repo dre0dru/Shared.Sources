@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 // Inspired by
 // https://github.com/upscalebaby/generic-serializable-dictionary
@@ -10,11 +12,15 @@ using UnityEngine;
 namespace Shared.Sources.Collections
 {
     [Serializable]
+    [DebuggerDisplay("Count = {Count}")]
     public class UDictionary<TKey, TValue, TKvp> : IDictionary<TKey, TValue>, ISerializationCallbackReceiver
         where TKvp : IKvp<TKey, TValue>, new()
     {
         [SerializeField]
         private List<TKvp> _serialized = new List<TKvp>();
+        
+        [SerializeField, HideInInspector]
+        private bool _hasCollisions;
 
         private Dictionary<TKey, TValue> _runtimeDictionary;
 
@@ -25,9 +31,12 @@ namespace Shared.Sources.Collections
                 _runtimeDictionary ??= _serialized.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
                 #if !UNITY_EDITOR
-                //Clearing serialized list so no data is duplicated in memory
-                _serialized.Clear();
-                _serialized = null;
+                if(_serialized != null)
+                {
+                    //Clearing serialized list so no data is duplicated in memory
+                    _serialized.Clear();
+                    _serialized = null;
+                }
                 #endif
 
                 return _runtimeDictionary;
@@ -50,6 +59,21 @@ namespace Shared.Sources.Collections
         public ICollection<TKey> Keys => Dictionary.Keys;
         public ICollection<TValue> Values => Dictionary.Values;
 
+        #if UNITY_2020_3_OR_NEWER
+        [UnityEngine.Scripting.RequiredMember]
+        #endif
+        public UDictionary()
+        {
+            
+        }
+        
+        public UDictionary(IDictionary<TKey, TValue> dictionary)
+        {
+            foreach (KeyValuePair<TKey,TValue> pair in dictionary) {
+                Add(pair.Key, pair.Value);
+            }
+        }
+        
         public void Add(TKey key, TValue value)
         {
             Dictionary.Add(key, value);
@@ -99,7 +123,7 @@ namespace Shared.Sources.Collections
 
         bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> pair)
         {
-            if (Dictionary.TryGetValue(pair.Key, out var value))
+            if (TryGetValue(pair.Key, out var value))
             {
                 return EqualityComparer<TValue>.Default.Equals(value, pair.Value);
             }
@@ -114,7 +138,7 @@ namespace Shared.Sources.Collections
             if (arrayIndex < 0)
                 throw new ArgumentOutOfRangeException(nameof(arrayIndex),
                     "The starting array index cannot be negative");
-            if (array.Length - arrayIndex < Dictionary.Count)
+            if (array.Length - arrayIndex < Count)
                 throw new ArgumentException("The destination array has fewer elements than the collection");
 
             foreach (var pair in Dictionary)
@@ -143,9 +167,6 @@ namespace Shared.Sources.Collections
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)Dictionary).GetEnumerator();
 
-        [SerializeField, HideInInspector]
-        private bool _hasCollisions;
-
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
             
@@ -160,6 +181,7 @@ namespace Shared.Sources.Collections
         }
 
         #if UNITY_EDITOR
+
         private void AddOrUpdateList(TKey key, TValue value)
         {
             if (TryFindListIndexByKey(key, out var index))
@@ -205,8 +227,19 @@ namespace Shared.Sources.Collections
     }
 
     [Serializable]
+    [DebuggerDisplay("Count = {Count}")]
     public class UDictionary<TKey, TValue> : UDictionary<TKey, TValue, Kvp<TKey, TValue>>
     {
+        #if UNITY_2020_3_OR_NEWER
+        [UnityEngine.Scripting.RequiredMember]
+        #endif
+        public UDictionary() : base()
+        {
+            
+        }
         
+        public UDictionary(IDictionary<TKey, TValue> dictionary) : base(dictionary)
+        {
+        }
     }
 }

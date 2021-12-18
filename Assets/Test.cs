@@ -59,10 +59,23 @@ public class Test : MonoBehaviour
     
     [SerializeField]
     private UDictionary<string, int, SelectableKvp> _someDictionary;
+    
+    [SerializeField]
+    private UDictionary<string, int> _testDictionary;
 
     private void Awake()
     {
         Debug.Log($"{_someDictionary["asd"]}");
+    }
+
+    [ContextMenu("CreateTestDictionary")]
+    public void CreateTestDictionary()
+    {
+        _testDictionary = new UDictionary<string, int>()
+        {
+            { "asd", 2 },
+            { "dasg", 2151 }
+        };
     }
 
     [ContextMenu("Add")]

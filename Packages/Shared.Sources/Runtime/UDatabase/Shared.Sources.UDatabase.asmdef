@@ -1,5 +1,5 @@
 {
-    "name": "Shared.Sources.ScriptableDatabase",
+    "name": "Shared.Sources.UDatabase",
     "rootNamespace": "Shared.Sources",
     "references": [
         "GUID:ed27a03d91d1b074dbc6bc2bc16ab73a"

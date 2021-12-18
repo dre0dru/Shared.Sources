@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Shared.Sources.Collections;
 using UnityEngine;
 
@@ -24,4 +25,12 @@ public class Test2 : MonoBehaviour
         
     [SerializeField]
     private UDictionary<string, GameObject, StringKvp<GameObject>> _yetAnother;
+
+    [SerializeField]
+    private UDictionary<string, SelectableKvp> _asd;
+
+    private void Start()
+    {
+        var dicr = new Dictionary<string, int>();
+    }
 }

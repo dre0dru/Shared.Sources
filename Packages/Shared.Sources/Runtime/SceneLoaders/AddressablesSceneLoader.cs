@@ -24,7 +24,9 @@ namespace Shared.Sources.SceneLoaders
 
         public IEnumerable<string> LoadedScenesNames => _sceneLoader.LoadedScenesNames;
 
+        #if UNITY_2020_3_OR_NEWER
         [UnityEngine.Scripting.RequiredMember]
+        #endif
         public AddressablesSceneLoader()
         {
             _sceneLoader = new SceneLoader();
