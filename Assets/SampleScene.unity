@@ -311,8 +311,56 @@ PrefabInstance:
       value: GameObject
       objectReference: {fileID: 0}
     - target: {fileID: 7067566740042695969, guid: 02bc68245d849e24988192fe5c2809d8, type: 3}
+      propertyPath: _ref
+      value: 
+      objectReference: {fileID: 11400000, guid: ee1120ed263e8df42a2527ae18aec078, type: 2}
+    - target: {fileID: 7067566740042695969, guid: 02bc68245d849e24988192fe5c2809d8, type: 3}
+      propertyPath: _refKeys
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7067566740042695969, guid: 02bc68245d849e24988192fe5c2809d8, type: 3}
+      propertyPath: _uDatabaseComposite
+      value: 
+      objectReference: {fileID: 11400000, guid: 352ee96b7d8ca7e44ad15f05dee55aa0, type: 2}
+    - target: {fileID: 7067566740042695969, guid: 02bc68245d849e24988192fe5c2809d8, type: 3}
+      propertyPath: _someDictionary._hasCollisions
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7067566740042695969, guid: 02bc68245d849e24988192fe5c2809d8, type: 3}
+      propertyPath: _someDictionary._serialized.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7067566740042695969, guid: 02bc68245d849e24988192fe5c2809d8, type: 3}
       propertyPath: _someDictionary._serialized.Array.data[2]._key
+      value: Inner/I
+      objectReference: {fileID: 0}
+    - target: {fileID: 7067566740042695969, guid: 02bc68245d849e24988192fe5c2809d8, type: 3}
+      propertyPath: _someDictionary._serialized.Array.data[3]._key
+      value: Inner/U
+      objectReference: {fileID: 0}
+    - target: {fileID: 7067566740042695969, guid: 02bc68245d849e24988192fe5c2809d8, type: 3}
+      propertyPath: _someDictionary._serialized.Array.data[4]._key
+      value: hfg
+      objectReference: {fileID: 0}
+    - target: {fileID: 7067566740042695969, guid: 02bc68245d849e24988192fe5c2809d8, type: 3}
+      propertyPath: _someDictionary._serialized.Array.data[5]._key
       value: asd
+      objectReference: {fileID: 0}
+    - target: {fileID: 7067566740042695969, guid: 02bc68245d849e24988192fe5c2809d8, type: 3}
+      propertyPath: _someDictionary._serialized.Array.data[2]._value
+      value: 5783
+      objectReference: {fileID: 0}
+    - target: {fileID: 7067566740042695969, guid: 02bc68245d849e24988192fe5c2809d8, type: 3}
+      propertyPath: _someDictionary._serialized.Array.data[3]._value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7067566740042695969, guid: 02bc68245d849e24988192fe5c2809d8, type: 3}
+      propertyPath: _someDictionary._serialized.Array.data[4]._value
+      value: 5783
+      objectReference: {fileID: 0}
+    - target: {fileID: 7067566740042695969, guid: 02bc68245d849e24988192fe5c2809d8, type: 3}
+      propertyPath: _someDictionary._serialized.Array.data[5]._value
+      value: 97807
       objectReference: {fileID: 0}
     - target: {fileID: 8075254496245516475, guid: 02bc68245d849e24988192fe5c2809d8, type: 3}
       propertyPath: m_RootOrder

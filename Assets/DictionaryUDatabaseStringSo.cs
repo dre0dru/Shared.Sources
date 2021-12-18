@@ -1,11 +1,8 @@
-using Shared.Sources.UDatabase;
+using Shared.Sources.Collections;
 using UnityEngine;
 
-namespace DefaultNamespace
+[CreateAssetMenu(fileName = "DictionaryUDatabaseStringSo", menuName = "Test/DictionaryUDatabaseStringSo")]
+public class DictionaryUDatabaseStringSo : UDictionarySo<string, int>
 {
-    [CreateAssetMenu(fileName = "DictionaryUDatabaseStringSo", menuName = "Test/DictionaryUDatabaseStringSo")]
-    public class DictionaryUDatabaseStringSo : DictionaryUDatabaseSo<string, int>
-    {
         
-    }
 }

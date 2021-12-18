@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00644f6806dd40c9b0b8f76d8982f2f3, type: 3}
-  m_Name: TEST
-  m_EditorClassIdentifier: 
+  m_Script: {fileID: 11500000, guid: 08275104cfcb4884c81fc6d0c778d4c6, type: 3}
+  m_Name: DictionaryUDatabaseStringSoKeys
+  m_EditorClassIdentifier: Assembly-CSharp:DefaultNamespace:DictionaryUDatabaseStringSoKeys
   _dictionary:
-    _serialized: []
+    _serialized:
+    - _key: S
+      _value: 155
     _hasCollisions: 0

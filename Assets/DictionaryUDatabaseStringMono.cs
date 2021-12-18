@@ -1,10 +1,7 @@
-using Shared.Sources.UDatabase;
+using Shared.Sources.Collections;
 using UnityEngine;
 
-namespace DefaultNamespace
+public class DictionaryUDatabaseStringMono : UDictionaryMono<string, GameObject>
 {
-    public class DictionaryUDatabaseStringMono : DictionaryUDatabaseMono<string, GameObject>
-    {
         
-    }
 }

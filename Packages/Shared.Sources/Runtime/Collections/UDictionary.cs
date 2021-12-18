@@ -4,11 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
-// Inspired by
-// https://github.com/upscalebaby/generic-serializable-dictionary
-// https://gist.github.com/Moe-Baker/e36610361012d586b1393994febeb5d2
 namespace Shared.Sources.Collections
 {
     [Serializable]
@@ -58,6 +54,7 @@ namespace Shared.Sources.Collections
 
         public ICollection<TKey> Keys => Dictionary.Keys;
         public ICollection<TValue> Values => Dictionary.Values;
+        public int Count => Dictionary.Count;
 
         #if UNITY_2020_3_OR_NEWER
         [UnityEngine.Scripting.RequiredMember]
@@ -69,7 +66,7 @@ namespace Shared.Sources.Collections
         
         public UDictionary(IDictionary<TKey, TValue> dictionary)
         {
-            foreach (KeyValuePair<TKey,TValue> pair in dictionary) {
+            foreach (var pair in dictionary) {
                 Add(pair.Key, pair.Value);
             }
         }
@@ -79,15 +76,9 @@ namespace Shared.Sources.Collections
             Dictionary.Add(key, value);
 
             #if UNITY_EDITOR
-            _serialized.Add(new TKvp()
-            {
-                Key = key,
-                Value = value
-            });
+            AddOrUpdateList(key, value);
             #endif
         }
-
-        public bool ContainsKey(TKey key) => Dictionary.ContainsKey(key);
 
         public bool Remove(TKey key)
         {
@@ -101,18 +92,10 @@ namespace Shared.Sources.Collections
             return Dictionary.Remove(key);
         }
 
+        public bool ContainsKey(TKey key) => Dictionary.ContainsKey(key);
+
         public bool TryGetValue(TKey key, out TValue value) => Dictionary.TryGetValue(key, out value);
-
-        public int Count => Dictionary.Count;
-
-        bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly =>
-            ((ICollection<KeyValuePair<TKey, TValue>>)Dictionary).IsReadOnly;
-
-        void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> pair)
-        {
-            Add(pair.Key, pair.Value);
-        }
-
+        
         public void Clear()
         {
             Dictionary.Clear();
@@ -121,46 +104,26 @@ namespace Shared.Sources.Collections
             #endif
         }
 
-        bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> pair)
-        {
-            if (TryGetValue(pair.Key, out var value))
-            {
-                return EqualityComparer<TValue>.Default.Equals(value, pair.Value);
-            }
+        bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly =>
+            ((ICollection<KeyValuePair<TKey, TValue>>)Dictionary).IsReadOnly;
 
-            return false;
+        void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item)
+        {
+            ((ICollection<KeyValuePair<TKey, TValue>>)Dictionary).Add(item);
+            
+            #if UNITY_EDITOR
+            AddOrUpdateList(item.Key, item.Value);
+            #endif
         }
 
-        void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
-        {
-            if (array == null)
-                throw new ArgumentException("The array cannot be null");
-            if (arrayIndex < 0)
-                throw new ArgumentOutOfRangeException(nameof(arrayIndex),
-                    "The starting array index cannot be negative");
-            if (array.Length - arrayIndex < Count)
-                throw new ArgumentException("The destination array has fewer elements than the collection");
+        bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item) =>
+            ((ICollection<KeyValuePair<TKey, TValue>>)Dictionary).Contains(item);
 
-            foreach (var pair in Dictionary)
-            {
-                array[arrayIndex] = pair;
-                arrayIndex++;
-            }
-        }
+        void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex) =>
+            ((ICollection<KeyValuePair<TKey, TValue>>)Dictionary).CopyTo(array, arrayIndex);
 
-        bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> pair)
-        {
-            if (Dictionary.TryGetValue(pair.Key, out var value))
-            {
-                bool valueMatch = EqualityComparer<TValue>.Default.Equals(value, pair.Value);
-                if (valueMatch)
-                {
-                    return Remove(pair.Key);
-                }
-            }
-
-            return false;
-        }
+        bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item) =>
+            ((ICollection<KeyValuePair<TKey, TValue>>)Dictionary).Remove(item);
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() =>
             ((IEnumerable<KeyValuePair<TKey, TValue>>)Dictionary).GetEnumerator();
@@ -233,7 +196,7 @@ namespace Shared.Sources.Collections
         #if UNITY_2020_3_OR_NEWER
         [UnityEngine.Scripting.RequiredMember]
         #endif
-        public UDictionary() : base()
+        public UDictionary()
         {
             
         }

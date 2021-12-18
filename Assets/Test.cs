@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Shared.Sources.Collections;
 using Shared.Sources.CustomDrawers;
 using UnityEngine;
@@ -62,6 +60,12 @@ public class Test : MonoBehaviour
     
     [SerializeField]
     private UDictionary<string, int> _testDictionary;
+
+    [SerializeField]
+    private UDictionarySo<string, int> _ref;
+    
+    [SerializeField]
+    private UDictionarySo<string, int> _refKeys;
 
     private void Awake()
     {
