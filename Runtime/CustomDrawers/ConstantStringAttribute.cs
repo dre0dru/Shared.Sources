@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Shared.Sources.CustomDrawers
 {
-    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
     public class ConstantStringAttribute : PropertyAttribute
     {
         private readonly Type _source;
