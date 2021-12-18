@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Shared.Sources.Collections
 {
+    [Serializable]
     public class FlattenedArray<T> : IEnumerable<T>
     {
         private readonly T[] _array2D;
