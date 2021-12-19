@@ -16,5 +16,21 @@ namespace Shared.Sources.Collections
 
             return collection;
         }
+
+        public static TDictionarySo CreateCloneForEditor<TKey, TValue, TDictionarySo>(this TDictionarySo dictionarySo)
+            where TDictionarySo : DictionarySo<TKey, TValue>
+        {
+            #if UNITY_EDITOR
+            return dictionarySo.CreateClone<TKey, TValue, TDictionarySo>();
+            #else
+            return dictionarySo;
+            #endif
+        }
+        
+        public static TDictionarySo CreateClone<TKey, TValue, TDictionarySo>(this TDictionarySo dictionarySo)
+            where TDictionarySo : DictionarySo<TKey, TValue>
+        {
+            return Object.Instantiate(dictionarySo);
+        }
     }
 }
