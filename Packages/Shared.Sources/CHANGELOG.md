@@ -1,3 +1,21 @@
+# [2.0.0](https://github.com/dre0dru/Shared.Sources/compare/v1.1.0...v2.0.0) (2021-12-19)
+
+
+### Features
+
+* exposed dictionary serialization, better constant string drawer ([d8fec34](https://github.com/dre0dru/Shared.Sources/commit/d8fec340abadfb34f6de6e2a855d92316a596fb2))
+* removed database code entirely, replaced with mono/so dictionaries ([afb538a](https://github.com/dre0dru/Shared.Sources/commit/afb538a91f6533d805d3877fd81632c7e9b49dab))
+* scriptable database rework ([3286bbf](https://github.com/dre0dru/Shared.Sources/commit/3286bbfbb259d9ee235e3dee1b6dc92e376a38c4))
+* serializable dictionary ([463267d](https://github.com/dre0dru/Shared.Sources/commit/463267d5a2cca03d3762e750f2a3f95d18ccdbe6))
+
+
+### BREAKING CHANGES
+
+* removed database code
+* namespaces and class names changes
+* renamed serialized fields for Kvp
+* namespaces changes
+
 # [1.1.0](https://github.com/dre0dru/Shared.Sources/compare/v1.0.1...v1.1.0) (2021-12-16)
 
 
