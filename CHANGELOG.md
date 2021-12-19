@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/dre0dru/Shared.Sources/compare/v2.1.0...v2.2.0) (2021-12-19)
+
+
+### Features
+
+* added cloning extension to dictionaryso ([6972ccd](https://github.com/dre0dru/Shared.Sources/commit/6972ccd8d1276b1f8aa0a306fed7aa996e5884e7))
+
 # [2.1.0](https://github.com/dre0dru/Shared.Sources/compare/v2.0.0...v2.1.0) (2021-12-19)
 
 
