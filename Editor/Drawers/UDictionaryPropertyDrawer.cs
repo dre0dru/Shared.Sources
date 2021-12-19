@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Shared.Sources.Editor.Drawers
 {
-    [CustomPropertyDrawer(typeof(UDictionary<,,>), true)]
+    [CustomPropertyDrawer(typeof(UDictionary<,>), true)]
     public class UDictionaryPropertyDrawer : PropertyDrawer
     {
         private float LineHeight => EditorGUIUtility.singleLineHeight;

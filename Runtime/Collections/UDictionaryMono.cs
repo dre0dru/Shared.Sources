@@ -3,11 +3,10 @@ using UnityEngine;
 
 namespace Shared.Sources.Collections
 {
-   public class UDictionaryMono<TKey, TValue, TKvp> : DictionaryMono<TKey, TValue>
-        where TKvp : IKvp<TKey, TValue>, new()
+   public class UDictionaryMono<TKey, TValue> : DictionaryMono<TKey, TValue>
     {
         [SerializeField]
-        private UDictionary<TKey, TValue, TKvp> _dictionary;
+        private UDictionary<TKey, TValue> _dictionary;
 
         public override TValue this[TKey key]
         {
@@ -51,9 +50,5 @@ namespace Shared.Sources.Collections
 
         public override void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex) =>
             ((ICollection<KeyValuePair<TKey, TValue>>)_dictionary).CopyTo(array, arrayIndex);
-    }
-
-    public class UDictionaryMono<TKey, TValue> : UDictionaryMono<TKey, TValue, Kvp<TKey, TValue>>
-    {
     }
 }

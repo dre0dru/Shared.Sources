@@ -9,11 +9,10 @@ namespace Shared.Sources.Collections
 {
     [Serializable]
     [DebuggerDisplay("Count = {Count}")]
-    public class UDictionary<TKey, TValue, TKvp> : IDictionary<TKey, TValue>, ISerializationCallbackReceiver
-        where TKvp : IKvp<TKey, TValue>, new()
+    public class UDictionary<TKey, TValue> : IDictionary<TKey, TValue>, ISerializationCallbackReceiver
     {
         [SerializeField]
-        private List<TKvp> _serialized = new List<TKvp>();
+        private List<Kvp<TKey, TValue>> _serialized = new List<Kvp<TKey, TValue>>();
         
         [SerializeField, HideInInspector]
         private bool _hasCollisions;
@@ -149,7 +148,7 @@ namespace Shared.Sources.Collections
         {
             if (TryFindListIndexByKey(key, out var index))
             {
-                _serialized[index] = new TKvp()
+                _serialized[index] = new Kvp<TKey, TValue>
                 {
                     Key = key,
                     Value = value
@@ -157,7 +156,7 @@ namespace Shared.Sources.Collections
             }
             else
             {
-                _serialized.Add(new TKvp()
+                _serialized.Add(new Kvp<TKey, TValue>
                 {
                     Key = key,
                     Value = value
@@ -187,22 +186,5 @@ namespace Shared.Sources.Collections
             return false;
         }
         #endif
-    }
-
-    [Serializable]
-    [DebuggerDisplay("Count = {Count}")]
-    public class UDictionary<TKey, TValue> : UDictionary<TKey, TValue, Kvp<TKey, TValue>>
-    {
-        #if UNITY_2020_3_OR_NEWER
-        [UnityEngine.Scripting.RequiredMember]
-        #endif
-        public UDictionary()
-        {
-            
-        }
-        
-        public UDictionary(IDictionary<TKey, TValue> dictionary) : base(dictionary)
-        {
-        }
     }
 }
