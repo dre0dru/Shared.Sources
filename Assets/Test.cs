@@ -56,7 +56,7 @@ public class Test : MonoBehaviour
     private SelectableKvp _selectable;
     
     [SerializeField]
-    private UDictionary<string, int, SelectableKvp> _someDictionary;
+    private UDictionary<string, int> _someDictionary;
     
     [SerializeField]
     private UDictionary<string, int> _testDictionary;

@@ -1,11 +1,11 @@
-using Shared.Sources.Collections;
+using Simplification;
 using UnityEditor;
 using UnityEngine;
 
-namespace Shared.Sources.Editor.Drawers
+namespace Editor
 {
-    [CustomPropertyDrawer(typeof(UDictionary<,>), true)]
-    public class UDictionaryPropertyDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(Dict<,>), true)]
+    public class DictPropertyDrawer : PropertyDrawer
     {
         private float LineHeight => EditorGUIUtility.singleLineHeight;
         private float VerticalSpacing => EditorGUIUtility.standardVerticalSpacing;

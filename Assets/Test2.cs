@@ -20,11 +20,11 @@ public class Test2 : MonoBehaviour
     private StringKvp<int> _someStringKvp;
         
         
-    [SerializeField]
-    private UDictionary<string, GameObject, CCSKvp> _anotherDict;
-        
-    [SerializeField]
-    private UDictionary<string, GameObject, StringKvp<GameObject>> _yetAnother;
+    // [SerializeField]
+    // private UDictionary<string, GameObject, CCSKvp> _anotherDict;
+    //     
+    // [SerializeField]
+    // private UDictionary<string, GameObject, StringKvp<GameObject>> _yetAnother;
 
     [SerializeField]
     private UDictionary<string, SelectableKvp> _asd;

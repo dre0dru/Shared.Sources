@@ -3,17 +3,40 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Shared.Sources.Collections;
 using UnityEngine;
 
-namespace Shared.Sources.Collections
+namespace Simplification
 {
     [Serializable]
-    [DebuggerDisplay("Count = {Count}")]
-    public class UDictionary<TKey, TValue> : IDictionary<TKey, TValue>, ISerializationCallbackReceiver
+    public struct KvpNew<TKey, TValue> : IKvp<TKey, TValue>
     {
         [SerializeField]
-        private List<Kvp<TKey, TValue>> _serialized = new List<Kvp<TKey, TValue>>();
-        
+        private TKey _key;
+
+        [SerializeField]
+        private TValue _value;
+
+        public TKey Key
+        {
+            get => _key;
+            set => _key = value;
+        }
+
+        public TValue Value
+        {
+            get => _value;
+            set => _value = value;
+        }
+    }
+    
+    [Serializable]
+    [DebuggerDisplay("Count = {Count}")]
+    public class Dict<TKey, TValue> : IDictionary<TKey, TValue>, ISerializationCallbackReceiver
+    {
+        [SerializeField]
+        private List<KvpNew<TKey, TValue>> _serialized = new List<KvpNew<TKey, TValue>>();
+
         [SerializeField, HideInInspector]
         private bool _hasCollisions;
 
@@ -58,18 +81,18 @@ namespace Shared.Sources.Collections
         #if UNITY_2020_3_OR_NEWER
         [UnityEngine.Scripting.RequiredMember]
         #endif
-        public UDictionary()
+        public Dict()
         {
-            
         }
-        
-        public UDictionary(IDictionary<TKey, TValue> dictionary)
+
+        public Dict(IDictionary<TKey, TValue> dictionary)
         {
-            foreach (var pair in dictionary) {
+            foreach (var pair in dictionary)
+            {
                 Add(pair.Key, pair.Value);
             }
         }
-        
+
         public void Add(TKey key, TValue value)
         {
             Dictionary.Add(key, value);
@@ -94,7 +117,7 @@ namespace Shared.Sources.Collections
         public bool ContainsKey(TKey key) => Dictionary.ContainsKey(key);
 
         public bool TryGetValue(TKey key, out TValue value) => Dictionary.TryGetValue(key, out value);
-        
+
         public void Clear()
         {
             Dictionary.Clear();
@@ -109,7 +132,7 @@ namespace Shared.Sources.Collections
         void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item)
         {
             ((ICollection<KeyValuePair<TKey, TValue>>)Dictionary).Add(item);
-            
+
             #if UNITY_EDITOR
             AddOrUpdateList(item.Key, item.Value);
             #endif
@@ -131,7 +154,6 @@ namespace Shared.Sources.Collections
 
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
-            
         }
 
         void ISerializationCallbackReceiver.OnAfterDeserialize()
@@ -148,7 +170,7 @@ namespace Shared.Sources.Collections
         {
             if (TryFindListIndexByKey(key, out var index))
             {
-                _serialized[index] = new Kvp<TKey, TValue>
+                _serialized[index] = new KvpNew<TKey, TValue>()
                 {
                     Key = key,
                     Value = value
@@ -156,7 +178,7 @@ namespace Shared.Sources.Collections
             }
             else
             {
-                _serialized.Add(new Kvp<TKey, TValue>
+                _serialized.Add( new KvpNew<TKey, TValue>
                 {
                     Key = key,
                     Value = value
