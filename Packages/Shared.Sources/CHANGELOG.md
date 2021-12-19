@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/dre0dru/Shared.Sources/compare/v2.0.0...v2.1.0) (2021-12-19)
+
+
+### Features
+
+* simplified udictionary hierarchy ([4bf67b9](https://github.com/dre0dru/Shared.Sources/commit/4bf67b98764900d3c2d813f66a94e37451b7b5b4))
+
 # [2.0.0](https://github.com/dre0dru/Shared.Sources/compare/v1.1.0...v2.0.0) (2021-12-19)
 
 
