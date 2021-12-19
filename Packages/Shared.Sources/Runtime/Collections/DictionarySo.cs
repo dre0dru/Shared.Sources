@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Shared.Sources.Collections
 {
-    //TODO onvalidate ceck for duplicates
     public abstract class DictionarySo<TKey, TValue> : ScriptableObject, IDictionary<TKey, TValue>
     {
         public abstract TValue this[TKey key] { get; set; }
