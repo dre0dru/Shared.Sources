@@ -1,16 +1,9 @@
+using Shared.Sources.CustomDrawers;
 using UnityEditor;
 using UnityEngine;
 
-namespace Shared.Sources.Editor
+namespace Shared.Sources.Editor.Drawers
 {
-    [System.Serializable]
-    public class FolderReference
-    {
-        public string GUID;
-
-        public string Path => AssetDatabase.GUIDToAssetPath(GUID);
-    }
-
     [CustomPropertyDrawer(typeof(FolderReference))]
     public class FolderReferencePropertyDrawer : PropertyDrawer
     {
