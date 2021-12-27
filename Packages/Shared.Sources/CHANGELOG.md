@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/dre0dru/Shared.Sources/compare/v2.2.0...v2.3.0) (2021-12-27)
+
+
+### Features
+
+* folder reference allowed for non-editor usage ([079cc04](https://github.com/dre0dru/Shared.Sources/commit/079cc042aa1e22dcc3e8383b78d17a5c60a45309))
+
 # [2.2.0](https://github.com/dre0dru/Shared.Sources/compare/v2.1.0...v2.2.0) (2021-12-19)
 
 
