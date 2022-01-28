@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Shared.Sources.Editor.Drawers
 {
     [CustomPropertyDrawer(typeof(ConstantStringAttribute))]
-    public class ConstantStringDrawer : PropertyDrawer
+    public class ConstantStringPropertyDrawer : PropertyDrawer
     {
         protected string[] _constants;
         protected float LineHeight => EditorGUIUtility.singleLineHeight;
