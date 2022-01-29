@@ -12,6 +12,7 @@ jobs:
       id: semantic
       uses: cycjimmy/semantic-release-action@v2
       with:
+        semantic_version: 2.6.0
         dry_run: true
         extra_plugins: |
           @semantic-release/changelog
