@@ -1,3 +1,15 @@
+# [2.4.0](https://github.com/dre0dru/Shared.Sources/compare/v2.3.0...v2.4.0) (2022-01-29)
+
+
+### Bug Fixes
+
+* typo in property drawer name ([f0c10ed](https://github.com/dre0dru/Shared.Sources/commit/f0c10ed8531c306b997a4671addcb3ffd1ef1d78))
+
+
+### Features
+
+* stats, leoecs lite extensions ([bfabf81](https://github.com/dre0dru/Shared.Sources/commit/bfabf81be5fbc94ed302e43b1e3877e0fa7d043a))
+
 # [2.3.0](https://github.com/dre0dru/Shared.Sources/compare/v2.2.0...v2.3.0) (2021-12-27)
 
 
