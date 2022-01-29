@@ -1,0 +1,26 @@
+{
+    "name": "Shared.Sources.Editor.LeoEcs.Lite",
+    "rootNamespace": "Shared.Sources",
+    "references": [
+        "GUID:206779980ac58453ea65e900299ccf71",
+        "GUID:a22362b82293644e1bbe51356c008d63",
+        "GUID:10a9d466ed6232346b613ca80cff0e73"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.leopotam.ecslite.unityeditor",
+            "expression": "",
+            "define": "LEOECS_LITE"
+        }
+    ],
+    "noEngineReferences": false
+}
