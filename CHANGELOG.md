@@ -1,3 +1,10 @@
+## [2.4.1](https://github.com/dre0dru/Shared.Sources/compare/v2.4.0...v2.4.1) (2022-01-30)
+
+
+### Bug Fixes
+
+* fixed indexer accessor for stats and stats collection ([7e1fffb](https://github.com/dre0dru/Shared.Sources/commit/7e1fffb3472ab9d07985a717a1e2b78f62a34d54))
+
 # [2.4.0](https://github.com/dre0dru/Shared.Sources/compare/v2.3.0...v2.4.0) (2022-01-29)
 
 
