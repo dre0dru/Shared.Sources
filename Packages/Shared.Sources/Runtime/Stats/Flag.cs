@@ -58,23 +58,18 @@ namespace Shared.Sources.Stats
             return this;
         }
         
-        public Flag OverrideFrom(Flag flag)
+        public Flag Override(Flag source)
         {
-            _flagCounter = flag._flagCounter;
+            _flagCounter = source._flagCounter;
 
             return this;
         }
 
-        public Flag Override(Flag flag)
-        {
-            flag._flagCounter = _flagCounter;
-
-            return flag;
-        }
-
         public Flag Clone()
         {
-            return Override(new Flag());
+            var clone = new Flag();
+            
+            return clone.Override(this);
         }
     }
 }
