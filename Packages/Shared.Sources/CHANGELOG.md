@@ -1,3 +1,15 @@
+# [2.5.0](https://github.com/dre0dru/Shared.Sources/compare/v2.4.1...v2.5.0) (2022-01-30)
+
+
+### Bug Fixes
+
+* marked flags collection ecs component inspector as abstract ([c10aaa0](https://github.com/dre0dru/Shared.Sources/commit/c10aaa0330cfc4adf91936c47ff92b8769296dbd))
+
+
+### Features
+
+* stats extensions, simplified stats hierarchy ([c228c39](https://github.com/dre0dru/Shared.Sources/commit/c228c39aa7c6c42f9d0e02a457723305c89107ab))
+
 ## [2.4.1](https://github.com/dre0dru/Shared.Sources/compare/v2.4.0...v2.4.1) (2022-01-30)
 
 
