@@ -12,7 +12,7 @@ namespace Shared.Sources.Stats
         [SerializeField]
         private UDictionary<TKey, Stat<TKey, TValue>> _stats;
 
-        public Stat<TKey, TValue> this[TKey key] => Get(key);
+        public Stat<TKey, TValue> this[TKey key] => _stats[key];
 
         #if UNITY_2020_3_OR_NEWER
         [UnityEngine.Scripting.RequiredMember]
@@ -47,13 +47,13 @@ namespace Shared.Sources.Stats
         {
             foreach (var kvp in statsCollection)
             {
-                this[kvp.Key].OverrideFrom(kvp.Value);
+                _stats[kvp.Key].OverrideFrom(kvp.Value);
             }
         }
 
         public void Override(StatsCollection<TKey, TValue> statsCollection)
         {
-            foreach (var kvp in this)
+            foreach (var kvp in _stats)
             {
                 statsCollection[kvp.Key].Override(kvp.Value);
             }

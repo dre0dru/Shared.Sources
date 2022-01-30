@@ -44,7 +44,7 @@ namespace Shared.Sources.Stats
         {
             foreach (var kvp in stat)
             {
-                this[kvp.Key] = kvp.Value;
+                _values[kvp.Key] = kvp.Value;
             }
 
             return this;
@@ -52,7 +52,7 @@ namespace Shared.Sources.Stats
 
         public Stat<TKey, TValue> Override(Stat<TKey, TValue> stat)
         {
-            foreach (var kvp in this)
+            foreach (var kvp in _values)
             {
                 stat[kvp.Key] = kvp.Value;
             }
