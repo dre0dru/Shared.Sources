@@ -7,7 +7,7 @@ using UnityEditor;
 
 namespace Shared.Sources.Editor.Ecs.LeoEcs.Lite
 {
-    public class FlagsCollectionReadOnlyInspector<TKey, TFlagsCollection> : IEcsComponentInspector
+    public abstract class FlagsCollectionReadOnlyInspector<TKey, TFlagsCollection> : IEcsComponentInspector
         where TFlagsCollection : FlagsCollection<TKey>
     {
         public Type GetFieldType()
