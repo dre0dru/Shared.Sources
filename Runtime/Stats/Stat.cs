@@ -27,12 +27,14 @@ namespace Shared.Sources.Stats
             _values = new UDictionary<TKey, TValue>();
         }
 
-        public Stat<TKey, TValue> Add(TKey key, TValue value)
-        {
+        public void Add(TKey key, TValue value) =>
             _values[key] = value;
 
-            return this;
-        }
+        public TValue Get(TKey key) =>
+            _values[key];
+
+        public bool TryGet(TKey key, out TValue value) =>
+            _values.TryGetValue(key, out value);
 
         public bool Has(TKey key) =>
             _values.ContainsKey(key);
@@ -40,33 +42,6 @@ namespace Shared.Sources.Stats
         public bool Remove(TKey key) =>
             _values.Remove(key);
 
-        public Stat<TKey, TValue> OverrideFrom(Stat<TKey, TValue> stat)
-        {
-            foreach (var kvp in stat)
-            {
-                _values[kvp.Key] = kvp.Value;
-            }
-
-            return this;
-        }
-
-        public Stat<TKey, TValue> Override(Stat<TKey, TValue> stat)
-        {
-            foreach (var kvp in _values)
-            {
-                stat[kvp.Key] = kvp.Value;
-            }
-
-            return stat;
-        }
-
-        public Stat<TKey, TValue> Clone()
-        {
-            var stat = new Stat<TKey, TValue>();
-
-            return Override(stat);
-        }
-        
         public override string ToString()
         {
             var sb = new StringBuilder();
