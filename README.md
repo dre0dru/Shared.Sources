@@ -35,6 +35,9 @@ https://github.com/dre0dru/Shared.Sources.git?path=/Packages/Shared.Sources
 ### Custom Drawers
 > TODO
 
+### Symlink folders
+> TODO
+
 ## Stats
 > TODO
 
