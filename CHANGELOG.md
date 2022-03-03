@@ -1,3 +1,11 @@
+## [2.6.1](https://github.com/dre0dru/Shared.Sources/compare/v2.6.0...v2.6.1) (2022-03-03)
+
+
+### Bug Fixes
+
+* added define constraint to leoecs.lite dependent module ([e167d7a](https://github.com/dre0dru/Shared.Sources/commit/e167d7ad6d4b49bf8e824cb7c55d5a00fa9c753e))
+* added define constraint to leoecs.lite.editor module ([50d2aa6](https://github.com/dre0dru/Shared.Sources/commit/50d2aa6a0c089f364f190c4efdf9254983e4f416))
+
 # [2.6.0](https://github.com/dre0dru/Shared.Sources/compare/v2.5.0...v2.6.0) (2022-03-03)
 
 
