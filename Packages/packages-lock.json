@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.cysharp.unitask": {
-      "version": "2.2.5",
+      "version": "2.3.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -21,7 +21,7 @@
       "hash": "9606358002fd2e1c3e767bf1d5694c8ce4c8dedd"
     },
     "com.leopotam.ecslite": {
-      "version": "2022.1.22",
+      "version": "2022.2.22",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -71,7 +71,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.vscode": {
-      "version": "1.2.4",
+      "version": "1.2.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -92,7 +92,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
-      "version": "1.1.30",
+      "version": "1.1.31",
       "depth": 0,
       "source": "registry",
       "dependencies": {
