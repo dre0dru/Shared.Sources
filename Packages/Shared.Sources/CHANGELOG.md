@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/dre0dru/Shared.Sources/compare/v2.5.0...v2.6.0) (2022-03-03)
+
+
+### Features
+
+* added symlink folders creation ([501a9ad](https://github.com/dre0dru/Shared.Sources/commit/501a9adcd18e1a7abf28cfa8df8d43ee5aa77544))
+
 # [2.5.0](https://github.com/dre0dru/Shared.Sources/compare/v2.4.1...v2.5.0) (2022-01-30)
 
 
