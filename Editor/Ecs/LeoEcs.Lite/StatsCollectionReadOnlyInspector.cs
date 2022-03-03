@@ -1,5 +1,3 @@
-#if LEOECS_LITE
-
 using System;
 using Leopotam.EcsLite.UnityEditor;
 using Shared.Sources.Stats;
@@ -43,5 +41,3 @@ namespace Shared.Sources.Editor.Ecs.LeoEcs.Lite
         }
     }
 }
-
-#endif

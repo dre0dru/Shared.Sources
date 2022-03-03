@@ -63,7 +63,5 @@ namespace Shared.Sources.Stats
 
             return target;
         }
-
-     
     }
 }
