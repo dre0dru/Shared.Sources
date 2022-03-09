@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Shared.Sources.Ecs.LeoEcs.Lite.Authoring
+namespace Shared.Sources.Ecs.LeoEcs.Lite.Extensions.Authoring
 {
     public abstract class ComponentAuthoring<TComponent> : MonoBehaviour
         where TComponent : struct

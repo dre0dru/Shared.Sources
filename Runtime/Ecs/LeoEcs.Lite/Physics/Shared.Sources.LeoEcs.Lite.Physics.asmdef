@@ -1,0 +1,33 @@
+{
+    "name": "Shared.Sources.LeoEcs.Lite.Physics",
+    "rootNamespace": "Shared.Sources",
+    "references": [
+        "GUID:e59bf9fc7d5a44b18a819a92edd46163",
+        "GUID:08b38f39e2d9e594389b7a4cf4c2c338",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:cd5ef130ea2e266499e5c35228089cc4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "LEOECS_LITE",
+        "MESSAGE_PIPE"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.leopotam.ecslite",
+            "expression": "",
+            "define": "LEOECS_LITE"
+        },
+        {
+            "name": "com.cysharp.messagepipe",
+            "expression": "",
+            "define": "MESSAGE_PIPE"
+        }
+    ],
+    "noEngineReferences": false
+}

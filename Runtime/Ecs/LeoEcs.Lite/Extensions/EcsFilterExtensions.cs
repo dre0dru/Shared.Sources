@@ -2,7 +2,7 @@ using System.Runtime.CompilerServices;
 using Leopotam.EcsLite;
 using UnityEngine;
 
-namespace Shared.Sources.Ecs.LeoEcs.Lite
+namespace Shared.Sources.Ecs.LeoEcs.Lite.Extensions
 {
     public static class EcsFilterExtensions
     {
