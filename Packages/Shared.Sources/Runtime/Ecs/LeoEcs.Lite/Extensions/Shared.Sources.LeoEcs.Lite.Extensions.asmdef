@@ -1,5 +1,5 @@
 {
-    "name": "Shared.Sources.LeoEcs.Lite",
+    "name": "Shared.Sources.LeoEcs.Lite.Extensions",
     "rootNamespace": "Shared.Sources",
     "references": [
         "GUID:e59bf9fc7d5a44b18a819a92edd46163"

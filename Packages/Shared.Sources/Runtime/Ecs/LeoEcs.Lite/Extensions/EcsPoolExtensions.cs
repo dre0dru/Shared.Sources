@@ -1,9 +1,9 @@
 using System.Runtime.CompilerServices;
 using Leopotam.EcsLite;
-using Shared.Sources.Ecs.LeoEcs.Lite.Authoring;
+using Shared.Sources.Ecs.LeoEcs.Lite.Extensions.Authoring;
 using UnityEngine;
 
-namespace Shared.Sources.Ecs.LeoEcs.Lite
+namespace Shared.Sources.Ecs.LeoEcs.Lite.Extensions
 {
     public static class EcsPoolExtensions
     {
