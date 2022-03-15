@@ -14,7 +14,9 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
+    "defineConstraints": [
+        "UNITASK_SUPPORT"
+    ],
     "versionDefines": [
         {
             "name": "jp.hadashikick.vcontainer",
