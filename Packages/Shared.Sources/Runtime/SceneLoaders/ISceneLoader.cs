@@ -1,5 +1,3 @@
-#if UNITASK_SUPPORT
-
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
@@ -31,5 +29,3 @@ namespace Shared.Sources.SceneLoaders
             IProgress<float> progress = null);
     }
 }
-
-#endif
