@@ -1,6 +1,5 @@
-namespace Shared.Sources.CustomDrawers
+namespace Shared.Sources.CustomTypes
 {
-    //TODO move to "CustomTypes" module
     [System.Serializable]
     public class FolderReference
     {
