@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Shared.Sources.CustomDrawers
+namespace Shared.Sources.CustomAttributes
 {
     public class ConstantStringAttribute : PropertyAttribute
     {

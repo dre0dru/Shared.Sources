@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Shared.Sources.CustomDrawers
+namespace Shared.Sources.CustomAttributes
 {
     public class ReadOnlyAttribute : PropertyAttribute
     {

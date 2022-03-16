@@ -6,6 +6,7 @@
     "com.jeffjadulco.guidregenerator": "https://github.com/jeffjadulco/unity-guid-regenerator.git",
     "com.leopotam.ecslite": "2022.2.22",
     "com.leopotam.ecslite.unityeditor": "2022.1.22",
+    "com.madsbangh.easybuttons": "https://github.com/madsbangh/EasyButtons.git#upm",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.addressables": "1.18.19",
     "com.unity.ide.rider": "2.0.7",

@@ -1,0 +1,25 @@
+{
+    "name": "Shared.Sources.Editor.RuntimeAssets",
+    "rootNamespace": "Shared.Sources",
+    "references": [
+        "GUID:ed27a03d91d1b074dbc6bc2bc16ab73a",
+        "GUID:305cbc51d8d1f0745a72b6a9464f093e",
+        "GUID:dc829289c42011f49b6e47e0f9be73c5",
+        "GUID:f24cf67903b27ae498b3069ecc30cc11"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.madsbangh.easybuttons",
+            "expression": "",
+            "define": "EASY_BUTTONS"
+        }
+    ],
+    "noEngineReferences": false
+}

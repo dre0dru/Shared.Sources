@@ -1,4 +1,4 @@
-using Shared.Sources.CustomDrawers;
+using Shared.Sources.CustomTypes;
 using UnityEditor;
 using UnityEngine;
 
@@ -27,8 +27,15 @@ namespace Shared.Sources.Editor.Drawers
             var propertyRect = new Rect(position.x, position.y, position.width, propertyHeight);
             position.y += propertyHeight;
 
+            var displayName = "Select Folder";
+
+            if (_targetFolder != null)
+            {
+                displayName = AssetDatabase.GetAssetPath(_targetFolder);
+            } 
+            
             _targetFolder =
-                (DefaultAsset)EditorGUI.ObjectField(propertyRect, property.displayName, _targetFolder,
+                (DefaultAsset)EditorGUI.ObjectField(propertyRect, displayName, _targetFolder,
                     typeof(DefaultAsset), false);
 
             if (_targetFolder != null)
