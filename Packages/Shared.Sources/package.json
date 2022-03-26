@@ -2,7 +2,7 @@
   "name": "com.dre0dru.shared.sources",
   "version": "2.6.1",
   "displayName": "Shared Sources",
-  "description": "TODO",
+  "description": "Collection of modules shared between projects",
   "unity": "2020.3",
   "unityRelease": "0f1",
   "keywords": [
@@ -16,5 +16,9 @@
     "name": "Dre0Dru",
     "url": "https://github.com/dre0dru"
   },
+  "license": "MIT",
+  "documentationUrl": "https://github.com/dre0dru/Shared.Sources",
+  "changelogUrl": "https://github.com/dre0dru/Shared.Sources/releases",
+  "licensesUrl": "https://github.com/dre0dru/Shared.Sources/blob/master/LICENSE.md",
   "type": "library"
 }

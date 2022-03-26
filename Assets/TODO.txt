@@ -1,1 +1,7 @@
 Tests for stats module
+
+Logger factory?
+Like in message pipe, static provider but also can be bound in v container
+
+Stats authoring via scriptable objects?
+Stats definition in SO, drawer that will display dropdowns for stats keys from so?
