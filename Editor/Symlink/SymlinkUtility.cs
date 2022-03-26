@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace Shared.Sources.Editor
+namespace Shared.Sources.Editor.Symlink
 {
     /// <summary>
     /// An editor utility for easily creating symlinks in your project.<para/>

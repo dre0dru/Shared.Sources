@@ -1,0 +1,16 @@
+{
+    "name": "Shared.Sources.Editor.Symlink",
+    "rootNamespace": "Shared.Sources",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "ENABLE_FOLDER_SYMLINKS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
