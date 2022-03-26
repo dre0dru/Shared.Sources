@@ -35,14 +35,14 @@
       "hash": "9606358002fd2e1c3e767bf1d5694c8ce4c8dedd"
     },
     "com.leopotam.ecslite": {
-      "version": "2022.2.22",
+      "version": "2022.3.22",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
     "com.leopotam.ecslite.unityeditor": {
-      "version": "2022.1.22",
+      "version": "2022.3.22",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
