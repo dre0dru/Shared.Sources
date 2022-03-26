@@ -1,3 +1,17 @@
+# [3.0.0](https://github.com/dre0dru/Shared.Sources/compare/v2.6.1...v3.0.0) (2022-03-26)
+
+
+### Features
+
+* added assets scanners, data asset ([bc9b8ea](https://github.com/dre0dru/Shared.Sources/commit/bc9b8ea6ca21c9cf8c891e1215e0a1c3300d840b))
+* added leoecs lite unity physics processing ([7d186a8](https://github.com/dre0dru/Shared.Sources/commit/7d186a8354cb0ad32bb57ee8aed68e0ebb454a2e))
+* readonly property drawer, more asset database utils, exposed Dictionary.Keys/Values in UDictionary ([07a17fa](https://github.com/dre0dru/Shared.Sources/commit/07a17fa4b955af13e562294f35926ebb9bd5986e))
+
+
+### BREAKING CHANGES
+
+* project restructure, namespaces changes
+
 ## [2.6.1](https://github.com/dre0dru/Shared.Sources/compare/v2.6.0...v2.6.1) (2022-03-03)
 
 
