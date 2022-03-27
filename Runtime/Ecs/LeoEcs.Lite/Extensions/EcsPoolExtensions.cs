@@ -12,7 +12,7 @@ namespace Shared.Sources.Ecs.LeoEcs.Lite.Extensions
             where T : struct
         {
             ref var component = ref pool.Add(entity);
-            component = authoringSource.GetComponent<ComponentAuthoring<T>>().Component;
+            component = authoringSource.GetComponentInChildren<ComponentAuthoring<T>>().Component;
 
             return ref component;
         }
