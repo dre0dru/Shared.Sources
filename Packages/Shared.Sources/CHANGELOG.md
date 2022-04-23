@@ -1,3 +1,12 @@
+# [3.1.0](https://github.com/dre0dru/Shared.Sources/compare/v3.0.0...v3.1.0) (2022-04-23)
+
+
+### Features
+
+* folder symlinks disabled by default, ecs physics system receives subscriber in ctor ([9c9a428](https://github.com/dre0dru/Shared.Sources/commit/9c9a4282aa47adf8add7cc1211d7780aecd946dc))
+* leocs lite gameobject/component authoring, name as key/custom key assets scanner ([60a9086](https://github.com/dre0dru/Shared.Sources/commit/60a9086d08bb6aa3e0339a37871d2defcb0908ca))
+* new authoring options for leoecs lite ([7a7c607](https://github.com/dre0dru/Shared.Sources/commit/7a7c607c7e5c3fd12e0dd42e049eddd78645e2f4))
+
 # [3.0.0](https://github.com/dre0dru/Shared.Sources/compare/v2.6.1...v3.0.0) (2022-03-26)
 
 
