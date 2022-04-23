@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Shared.Sources.Editor.RuntimeAssets
 {
-    public class NameAsKeyAssetsScanner<TRuntimeAsset> : AssetsScanner
-        where TRuntimeAsset: Object
+    public abstract class CustomKeyAssetsScanner<TKey, TRuntimeAsset> : AssetsScanner
+        where TRuntimeAsset : Object
     {
         [SerializeField]
-        protected List<ScannerTarget<string, TRuntimeAsset>> _scannerTargets;
+        protected List<ScannerTarget<TKey, TRuntimeAsset>> _scannerTargets;
 
         public override void Scan()
         {
@@ -19,16 +19,18 @@ namespace Shared.Sources.Editor.RuntimeAssets
                 var assets = AssetDatabaseUtils.LoadAssetsAtPaths<TRuntimeAsset>(folderPaths);
 
                 scannerTarget.Target.Clear();
-                
+
                 foreach (var runtimeAsset in assets)
                 {
-                    scannerTarget.Target.Add(runtimeAsset.name, runtimeAsset);
+                    scannerTarget.Target.Add(GetKeyFromAsset(runtimeAsset), runtimeAsset);
                 }
-                
+
                 AssetDatabaseUtils.SetDirtyAndSave(scannerTarget.Target);
             }
-            
+
             AssetDatabase.Refresh();
         }
+
+        public abstract TKey GetKeyFromAsset(TRuntimeAsset runtimeAsset);
     }
 }
