@@ -1,14 +1,14 @@
 {
   "dependencies": {
     "com.cysharp.messagepipe": {
-      "version": "1.7.2",
+      "version": "1.7.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
     "com.cysharp.messagepipe.vcontainer": {
-      "version": "1.7.2",
+      "version": "1.7.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -142,7 +142,7 @@
       }
     },
     "jp.hadashikick.vcontainer": {
-      "version": "1.10.0",
+      "version": "1.11.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
