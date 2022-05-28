@@ -83,7 +83,7 @@ namespace Shared.Sources.Editor.Drawers
         protected IEnumerable<string> GetTypeConstants(Type type)
         {
             return type.GetFields(BindingFlags.Public | BindingFlags.Static)
-                .Where(info => info.IsLiteral && !info.IsInitOnly)
+                .Where(info => info.IsLiteral && !info.IsInitOnly && info.GetRawConstantValue() is string)
                 .Select(info => (string)info.GetRawConstantValue());
         }
         
