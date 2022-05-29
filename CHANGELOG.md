@@ -1,3 +1,11 @@
+## [3.1.1](https://github.com/dre0dru/Shared.Sources/compare/v3.1.0...v3.1.1) (2022-05-29)
+
+
+### Bug Fixes
+
+* ConstantStringProperty drawer filters for strings only ([c58a400](https://github.com/dre0dru/Shared.Sources/commit/c58a4006d3e601e91391d4a531a5371f16665b42))
+* marked RuntimeAssets assembly as editor only ([c006864](https://github.com/dre0dru/Shared.Sources/commit/c0068642fec2db6972138656d4219d3a12f05ff4))
+
 # [3.1.0](https://github.com/dre0dru/Shared.Sources/compare/v3.0.0...v3.1.0) (2022-04-23)
 
 
