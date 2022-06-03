@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Shared.Sources.Collections
 {
     [Serializable]
     public class FlattenedArray<T> : IEnumerable<T>
     {
-        private readonly T[] _array2D;
+        [SerializeField]
+        private T[] _array2D;
 
         private readonly int _yDimension;
 
