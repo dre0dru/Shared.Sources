@@ -1,3 +1,5 @@
+using System;
+using System.Reflection;
 using Shared.Sources.Collections;
 using UnityEditor;
 using UnityEngine;
@@ -22,7 +24,7 @@ namespace Shared.Sources.Editor.Drawers
                     height = HelpBoxHeight
                 };
 
-                EditorGUI.HelpBox(helpBoxPos, "Nothing to draw, check ensure that IKvp is serializable", MessageType.Error);
+                EditorGUI.HelpBox(helpBoxPos, "Nothing to draw, check ensure that Key and Value are serializable", MessageType.Error);
                 return;
             }
 
@@ -34,7 +36,7 @@ namespace Shared.Sources.Editor.Drawers
                 {
                     height = HelpBoxHeight
                 };
-
+            
                 helpBoxPos.y += EditorGUI.GetPropertyHeight(serializedList, true) + VerticalSpacing;
                 
                 EditorGUI.HelpBox(helpBoxPos, $"{property.displayName} contains duplicate keys", MessageType.Error);
@@ -68,7 +70,22 @@ namespace Shared.Sources.Editor.Drawers
 
         private bool HasCollisions(SerializedProperty property)
         {
-            return property.FindPropertyRelative("_hasCollisions").boolValue;
+            var targetObject = property.GetObjectValue(this);
+            return HasCollisionReflection(targetObject.GetType(), targetObject, "_hasCollisions");
+        }
+        
+        private static bool HasCollisionReflection(Type type, object instance, string fieldName)
+        {
+            BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
+                                     | BindingFlags.Static;
+            FieldInfo field = type.GetField(fieldName, bindFlags);
+
+            if (field == null)
+            {
+                return false;
+            }
+            
+            return (bool)field.GetValue(instance);
         }
     }
 }

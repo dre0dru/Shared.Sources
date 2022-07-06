@@ -3,40 +3,37 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 namespace Shared.Sources.Collections
 {
     [Serializable]
     [DebuggerDisplay("Count = {Count}")]
-    public class UDictionary<TKey, TValue> : IDictionary<TKey, TValue>, ISerializationCallbackReceiver
+    public class UDictionary<TKey, TValue> : IDictionary<TKey, TValue>, ISerializationCallbackReceiver,
+        IDeserializationCallback, ISerializable
     {
-        [SerializeField]
-        private List<Kvp<TKey, TValue>> _serialized = new List<Kvp<TKey, TValue>>();
-        
-        [SerializeField, HideInInspector]
-        private bool _hasCollisions;
-
-        private Dictionary<TKey, TValue> _runtimeDictionary;
-
-        private Dictionary<TKey, TValue> Dictionary
+        protected class SerializableDictionary : Dictionary<TKey, TValue>
         {
-            get
+            public SerializableDictionary()
             {
-                _runtimeDictionary ??= _serialized.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            }
 
-                #if !UNITY_EDITOR
-                if(_serialized != null)
-                {
-                    //Clearing serialized list so no data is duplicated in memory
-                    _serialized.Clear();
-                    _serialized = null;
-                }
-                #endif
+            public SerializableDictionary(IDictionary<TKey, TValue> dict) : base(dict)
+            {
+            }
 
-                return _runtimeDictionary;
+            public SerializableDictionary(SerializationInfo info, StreamingContext context) : base(info, context)
+            {
             }
         }
+
+        [SerializeField]
+        private List<Kvp<TKey, TValue>> _serialized;
+        
+        private SerializableDictionary _runtimeDictionary;
+
+        private SerializableDictionary Dictionary => _runtimeDictionary;
 
         public TValue this[TKey key]
         {
@@ -56,7 +53,7 @@ namespace Shared.Sources.Collections
 
         ICollection<TKey> IDictionary<TKey, TValue>.Keys => Dictionary.Keys;
         ICollection<TValue> IDictionary<TKey, TValue>.Values => Dictionary.Values;
-        
+
         public int Count => Dictionary.Count;
 
         #if UNITY_2020_3_OR_NEWER
@@ -64,20 +61,47 @@ namespace Shared.Sources.Collections
         #endif
         public UDictionary()
         {
+            _runtimeDictionary = new SerializableDictionary();
             
+            #if UNITY_EDITOR
+            _serialized = new List<Kvp<TKey, TValue>>();
+            #endif
         }
-        
+
         public UDictionary(IDictionary<TKey, TValue> dictionary)
         {
-            foreach (var pair in dictionary) {
-                Add(pair.Key, pair.Value);
-            }
+            _runtimeDictionary = new SerializableDictionary(dictionary);
+            
+            #if UNITY_EDITOR
+            _serialized = new List<Kvp<TKey, TValue>>(_runtimeDictionary.Select(pair => new Kvp<TKey, TValue>()
+            {
+                Key = pair.Key,
+                Value = pair.Value
+            }));
+            #endif
         }
-        
+
+        #if UNITY_2020_3_OR_NEWER
+        [UnityEngine.Scripting.RequiredMember]
+        #endif
+        protected UDictionary(SerializationInfo info, StreamingContext context)
+        {
+            _runtimeDictionary = new SerializableDictionary(info, context);
+            
+            #if UNITY_EDITOR
+            //TODO дубликация кода
+            _serialized = new List<Kvp<TKey, TValue>>(_runtimeDictionary.Select(pair => new Kvp<TKey, TValue>()
+            {
+                Key = pair.Key,
+                Value = pair.Value
+            }));
+            #endif
+        }
+
         public void Add(TKey key, TValue value)
         {
             Dictionary.Add(key, value);
-
+            
             #if UNITY_EDITOR
             AddOrUpdateList(key, value);
             #endif
@@ -98,10 +122,11 @@ namespace Shared.Sources.Collections
         public bool ContainsKey(TKey key) => Dictionary.ContainsKey(key);
 
         public bool TryGetValue(TKey key, out TValue value) => Dictionary.TryGetValue(key, out value);
-        
+
         public void Clear()
         {
             Dictionary.Clear();
+            
             #if UNITY_EDITOR
             _serialized.Clear();
             #endif
@@ -110,14 +135,8 @@ namespace Shared.Sources.Collections
         bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly =>
             ((ICollection<KeyValuePair<TKey, TValue>>)Dictionary).IsReadOnly;
 
-        void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item)
-        {
+        void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item) =>
             ((ICollection<KeyValuePair<TKey, TValue>>)Dictionary).Add(item);
-            
-            #if UNITY_EDITOR
-            AddOrUpdateList(item.Key, item.Value);
-            #endif
-        }
 
         bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item) =>
             ((ICollection<KeyValuePair<TKey, TValue>>)Dictionary).Contains(item);
@@ -135,19 +154,80 @@ namespace Shared.Sources.Collections
 
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
-            
+            #if !UNITY_EDITOR
+            OnBeforeSerializePlayer();
+            #endif
         }
 
         void ISerializationCallbackReceiver.OnAfterDeserialize()
         {
             #if UNITY_EDITOR
-            _hasCollisions = CheckForCollisions();
-            _runtimeDictionary = null;
+            CheckForCollisions();
+            #endif
+
+            #if !UNITY_EDITOR
+            OnAfterDeserializePlayer();
             #endif
         }
 
-        #if UNITY_EDITOR
+        void IDeserializationCallback.OnDeserialization(object sender)
+        {
+            ((IDeserializationCallback)_runtimeDictionary).OnDeserialization(sender);
+        }
 
+        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            ((ISerializable)_runtimeDictionary).GetObjectData(info, context);
+        }
+
+        #if !UNITY_EDITOR
+        private void OnBeforeSerializePlayer()
+        {
+            _serialized = new List<Kvp<TKey, TValue>>(_runtimeDictionary.Count);
+
+            foreach (var kvp in _runtimeDictionary)
+            {
+                _serialized.Add(new Kvp<TKey, TValue>()
+                {
+                    Key = kvp.Key,
+                    Value = kvp.Value
+                });
+            }
+        }
+
+        private void OnAfterDeserializePlayer()
+        {
+            _runtimeDictionary.Clear();
+            foreach (var kvp in _serialized)
+            {
+                _runtimeDictionary.Add(kvp.Key, kvp.Value);
+            }
+
+            _serialized = null;
+        }
+        #endif
+
+        #if UNITY_EDITOR
+        #pragma warning disable CS0414
+        private bool _hasCollisions;
+        #pragma warning restore CS0414
+        
+        private void CheckForCollisions()
+        {
+            var hashSet = new HashSet<TKey>();
+
+            foreach (var kvp in _serialized)
+            {
+                if (!hashSet.Add(kvp.Key))
+                {
+                    _hasCollisions = true;
+                    return;
+                }
+            }
+
+            _hasCollisions = false;
+        }
+        
         private void AddOrUpdateList(TKey key, TValue value)
         {
             if (TryFindListIndexByKey(key, out var index))
@@ -173,21 +253,6 @@ namespace Shared.Sources.Collections
             index = _serialized.FindIndex(kvp => kvp.Key.Equals(key));
 
             return index != -1;
-        }
-
-        private bool CheckForCollisions()
-        {
-            var hashSet = new HashSet<TKey>();
-
-            foreach (var kvp in _serialized)
-            {
-                if (!hashSet.Add(kvp.Key))
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
         #endif
     }
