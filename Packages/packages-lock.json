@@ -1,14 +1,14 @@
 {
   "dependencies": {
     "com.cysharp.messagepipe": {
-      "version": "1.7.3",
+      "version": "1.7.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
     "com.cysharp.messagepipe.vcontainer": {
-      "version": "1.7.3",
+      "version": "1.7.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -35,7 +35,7 @@
       "hash": "9606358002fd2e1c3e767bf1d5694c8ce4c8dedd"
     },
     "com.leopotam.ecslite": {
-      "version": "2022.5.22",
+      "version": "2022.6.22",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -83,7 +83,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.14",
+      "version": "3.0.15",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -142,7 +142,7 @@
       }
     },
     "jp.hadashikick.vcontainer": {
-      "version": "1.11.0",
+      "version": "1.11.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {
