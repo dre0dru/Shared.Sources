@@ -2,7 +2,9 @@
     "name": "Shared.Sources.Editor.Symlink",
     "rootNamespace": "Shared.Sources",
     "references": [],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
