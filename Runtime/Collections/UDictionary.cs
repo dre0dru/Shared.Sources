@@ -175,7 +175,7 @@ namespace Shared.Sources.Collections
             return index != -1;
         }
 
-        public bool CheckForCollisions()
+        private bool CheckForCollisions()
         {
             var hashSet = new HashSet<TKey>();
 

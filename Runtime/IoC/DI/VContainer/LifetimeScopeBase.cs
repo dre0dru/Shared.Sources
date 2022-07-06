@@ -26,6 +26,21 @@ namespace Shared.Sources.IoC.DI.VContainer
                 scope.Install(builder);
             }
         }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            
+            foreach (var scope in _monoInstallers)
+            {
+                scope.Dispose();
+            }
+
+            foreach (var scope in _scriptableInstallers)
+            {
+                scope.Dispose();
+            }
+        }
     }
 }
 
