@@ -1,6 +1,6 @@
 {
   "name": "com.dre0dru.shared.sources",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "displayName": "Shared Sources",
   "description": "Collection of modules shared between projects",
   "unity": "2020.3",

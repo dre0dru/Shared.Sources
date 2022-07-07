@@ -1,3 +1,18 @@
+# [3.2.0](https://github.com/dre0dru/Shared.Sources/compare/v3.1.1...v3.2.0) (2022-07-07)
+
+
+### Bug Fixes
+
+* fixed searching for object value of serialized property ([fcf3c29](https://github.com/dre0dru/Shared.Sources/commit/fcf3c293aae98a3cc9ee4f2407fa23b466334c90))
+* marked symlink utility as editor-only assembly ([c7abeab](https://github.com/dre0dru/Shared.Sources/commit/c7abeabd0319ccff66377aa5167d95e35539d174))
+
+
+### Features
+
+* disposable mono/scriptable installers ([f246f83](https://github.com/dre0dru/Shared.Sources/commit/f246f83c3f34f8ec22bafee2c80c9db4e542344e))
+* full serialization support for UDictionary, removed _hasCollision property serialization ([b5c0c62](https://github.com/dre0dru/Shared.Sources/commit/b5c0c629c23b3c424032b08761ab217417924144))
+* service locator vcontainer extensions, serializable flattened array ([d4a026a](https://github.com/dre0dru/Shared.Sources/commit/d4a026a67242f19a63277e922fdfd6c44b0e9a9b))
+
 ## [3.1.1](https://github.com/dre0dru/Shared.Sources/compare/v3.1.0...v3.1.1) (2022-05-29)
 
 
