@@ -70,7 +70,7 @@ namespace Shared.Sources.Editor.Drawers
 
         private bool HasCollisions(SerializedProperty property)
         {
-            var targetObject = property.GetObjectValue(this);
+            var targetObject = property.GetObjectValue();
             return HasCollisionReflection(targetObject.GetType(), targetObject, "_hasCollisions");
         }
         
