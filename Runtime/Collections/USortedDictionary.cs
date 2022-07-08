@@ -3,17 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Serialization;
 using UnityEngine;
 
 namespace Shared.Sources.Collections
 {
     [Serializable]
     [DebuggerDisplay("Count = {Count}")]
-    public class UDictionary<TKey, TValue> : IDictionary<TKey, TValue>, ISerializationCallbackReceiver,
-        IDeserializationCallback, ISerializable
+    public class USortedDictionary<TKey, TValue> : IDictionary<TKey, TValue>, ISerializationCallbackReceiver
     {
-        protected class SerializableDictionary : Dictionary<TKey, TValue>
+        [Serializable]
+        protected class SerializableDictionary : SortedDictionary<TKey, TValue>
         {
             public SerializableDictionary()
             {
@@ -22,15 +21,11 @@ namespace Shared.Sources.Collections
             public SerializableDictionary(IDictionary<TKey, TValue> dict) : base(dict)
             {
             }
-
-            public SerializableDictionary(SerializationInfo info, StreamingContext context) : base(info, context)
-            {
-            }
         }
 
         [SerializeField]
         private List<Kvp<TKey, TValue>> _serialized;
-        
+
         private SerializableDictionary _runtimeDictionary;
 
         private SerializableDictionary Dictionary => _runtimeDictionary;
@@ -48,8 +43,8 @@ namespace Shared.Sources.Collections
             }
         }
 
-        public Dictionary<TKey, TValue>.KeyCollection Keys => Dictionary.Keys;
-        public Dictionary<TKey, TValue>.ValueCollection Values => Dictionary.Values;
+        public SortedDictionary<TKey, TValue>.KeyCollection Keys => Dictionary.Keys;
+        public SortedDictionary<TKey, TValue>.ValueCollection Values => Dictionary.Values;
 
         ICollection<TKey> IDictionary<TKey, TValue>.Keys => Dictionary.Keys;
         ICollection<TValue> IDictionary<TKey, TValue>.Values => Dictionary.Values;
@@ -59,35 +54,19 @@ namespace Shared.Sources.Collections
         #if UNITY_2020_3_OR_NEWER
         [UnityEngine.Scripting.RequiredMember]
         #endif
-        public UDictionary()
+        public USortedDictionary()
         {
             _runtimeDictionary = new SerializableDictionary();
-            
+
             #if UNITY_EDITOR
             _serialized = new List<Kvp<TKey, TValue>>();
             #endif
         }
 
-        public UDictionary(IDictionary<TKey, TValue> dictionary)
+        public USortedDictionary(IDictionary<TKey, TValue> dictionary)
         {
             _runtimeDictionary = new SerializableDictionary(dictionary);
-            
-            #if UNITY_EDITOR
-            _serialized = new List<Kvp<TKey, TValue>>(_runtimeDictionary.Select(pair => new Kvp<TKey, TValue>()
-            {
-                Key = pair.Key,
-                Value = pair.Value
-            }));
-            #endif
-        }
 
-        #if UNITY_2020_3_OR_NEWER
-        [UnityEngine.Scripting.RequiredMember]
-        #endif
-        protected UDictionary(SerializationInfo info, StreamingContext context)
-        {
-            _runtimeDictionary = new SerializableDictionary(info, context);
-            
             #if UNITY_EDITOR
             _serialized = new List<Kvp<TKey, TValue>>(_runtimeDictionary.Select(pair => new Kvp<TKey, TValue>()
             {
@@ -100,7 +79,7 @@ namespace Shared.Sources.Collections
         public void Add(TKey key, TValue value)
         {
             Dictionary.Add(key, value);
-            
+
             #if UNITY_EDITOR
             AddOrUpdateList(key, value);
             #endif
@@ -125,7 +104,7 @@ namespace Shared.Sources.Collections
         public void Clear()
         {
             Dictionary.Clear();
-            
+
             #if UNITY_EDITOR
             _serialized.Clear();
             #endif
@@ -137,7 +116,7 @@ namespace Shared.Sources.Collections
         void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item)
         {
             ((ICollection<KeyValuePair<TKey, TValue>>)Dictionary).Add(item);
-            
+
             #if UNITY_EDITOR
             AddOrUpdateList(item.Key, item.Value);
             #endif
@@ -157,14 +136,15 @@ namespace Shared.Sources.Collections
                 _serialized.RemoveAt(index);
             }
             #endif
-            
+
             return ((ICollection<KeyValuePair<TKey, TValue>>)Dictionary).Remove(item);
         }
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() =>
             ((IEnumerable<KeyValuePair<TKey, TValue>>)Dictionary).GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)Dictionary).GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() =>
+            ((IEnumerable)Dictionary).GetEnumerator();
 
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
@@ -185,21 +165,6 @@ namespace Shared.Sources.Collections
             #endif
         }
 
-        void IDeserializationCallback.OnDeserialization(object sender)
-        {
-            ((IDeserializationCallback)Dictionary).OnDeserialization(sender);
-            
-            #if UNITY_EDITOR
-            OnBeforeSerialize();
-            CheckForCollisions();
-            #endif
-        }
-
-        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            ((ISerializable)Dictionary).GetObjectData(info, context);
-        }
-
         private void OnBeforeSerialize()
         {
             _serialized = new List<Kvp<TKey, TValue>>(Dictionary.Count);
@@ -213,7 +178,7 @@ namespace Shared.Sources.Collections
                 });
             }
         }
-        
+
         #if !UNITY_EDITOR
         private void OnAfterDeserializePlayer()
         {
@@ -231,7 +196,7 @@ namespace Shared.Sources.Collections
         #pragma warning disable CS0414
         private bool _hasCollisions;
         #pragma warning restore CS0414
-        
+
         private void CheckForCollisions()
         {
             var hashSet = new HashSet<TKey>();

@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace Shared.Sources.Collections
 {
-   public class UDictionaryMono<TKey, TValue> : DictionaryMono<TKey, TValue>
+    public class USortedDictionarySo<TKey, TValue> : DictionarySo<TKey, TValue>
     {
         [SerializeField]
-        private UDictionary<TKey, TValue> _dictionary;
+        private USortedDictionary<TKey, TValue> _dictionary;
 
         public override TValue this[TKey key]
         {

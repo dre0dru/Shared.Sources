@@ -14,8 +14,8 @@ namespace Shared.Sources.Collections
             set => _dictionary[key] = value;
         }
 
-        public override Dictionary<TKey, TValue>.KeyCollection Keys => _dictionary.Keys;
-        public override Dictionary<TKey, TValue>.ValueCollection Values => _dictionary.Values;
+        public override ICollection<TKey> Keys => _dictionary.Keys;
+        public override ICollection<TValue> Values => _dictionary.Values;
 
         public override int Count => _dictionary.Count;
 

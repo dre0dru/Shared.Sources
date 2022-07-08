@@ -8,11 +8,8 @@ namespace Shared.Sources.Collections
     {
         public abstract TValue this[TKey key] { get; set; }
         
-        public abstract Dictionary<TKey, TValue>.KeyCollection Keys { get; }
-        public abstract Dictionary<TKey, TValue>.ValueCollection Values { get; }
-
-        ICollection<TKey> IDictionary<TKey, TValue>.Keys => Keys;
-        ICollection<TValue> IDictionary<TKey, TValue>.Values => Values;
+        public abstract ICollection<TKey> Keys { get; }
+        public abstract ICollection<TValue> Values { get; }
 
         public abstract int Count { get; }
         public abstract bool IsReadOnly { get; }
