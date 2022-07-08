@@ -7,7 +7,9 @@ using UnityEngine;
 namespace Shared.Sources.Editor.Drawers
 {
     [CustomPropertyDrawer(typeof(UDictionary<,>), true)]
-    public class UDictionaryPropertyDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(USortedDictionary<,>), true)]
+    [CustomPropertyDrawer(typeof(UHashSet<>), true)]
+    public class UCollectionPropertyDrawer : PropertyDrawer
     {
         private float LineHeight => EditorGUIUtility.singleLineHeight;
         private float VerticalSpacing => EditorGUIUtility.standardVerticalSpacing;
