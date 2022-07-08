@@ -39,7 +39,7 @@ namespace Shared.Sources.Editor.Drawers
             
                 helpBoxPos.y += EditorGUI.GetPropertyHeight(serializedList, true) + VerticalSpacing;
                 
-                EditorGUI.HelpBox(helpBoxPos, $"{property.displayName} contains duplicate keys", MessageType.Error);
+                EditorGUI.HelpBox(helpBoxPos, $"{property.displayName} contains duplicate keys, these values will be lost", MessageType.Error);
             }
         }
 
