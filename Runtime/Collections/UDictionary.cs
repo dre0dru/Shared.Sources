@@ -89,7 +89,6 @@ namespace Shared.Sources.Collections
             _runtimeDictionary = new SerializableDictionary(info, context);
             
             #if UNITY_EDITOR
-            //TODO дубликация кода
             _serialized = new List<Kvp<TKey, TValue>>(_runtimeDictionary.Select(pair => new Kvp<TKey, TValue>()
             {
                 Key = pair.Key,
@@ -135,8 +134,14 @@ namespace Shared.Sources.Collections
         bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly =>
             ((ICollection<KeyValuePair<TKey, TValue>>)Dictionary).IsReadOnly;
 
-        void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item) =>
+        void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item)
+        {
             ((ICollection<KeyValuePair<TKey, TValue>>)Dictionary).Add(item);
+            
+            #if UNITY_EDITOR
+            AddOrUpdateList(item.Key, item.Value);
+            #endif
+        }
 
         bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item) =>
             ((ICollection<KeyValuePair<TKey, TValue>>)Dictionary).Contains(item);
@@ -144,8 +149,17 @@ namespace Shared.Sources.Collections
         void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex) =>
             ((ICollection<KeyValuePair<TKey, TValue>>)Dictionary).CopyTo(array, arrayIndex);
 
-        bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item) =>
-            ((ICollection<KeyValuePair<TKey, TValue>>)Dictionary).Remove(item);
+        bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item)
+        {
+            #if UNITY_EDITOR
+            if (TryFindListIndexByKey(item.Key, out var index))
+            {
+                _serialized.RemoveAt(index);
+            }
+            #endif
+            
+            return ((ICollection<KeyValuePair<TKey, TValue>>)Dictionary).Remove(item);
+        }
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() =>
             ((IEnumerable<KeyValuePair<TKey, TValue>>)Dictionary).GetEnumerator();
@@ -163,6 +177,7 @@ namespace Shared.Sources.Collections
         {
             #if UNITY_EDITOR
             CheckForCollisions();
+            OnAfterDeserializeEditor();
             #endif
 
             #if !UNITY_EDITOR
@@ -227,7 +242,16 @@ namespace Shared.Sources.Collections
 
             _hasCollisions = false;
         }
-        
+
+        private void OnAfterDeserializeEditor()
+        {
+            _runtimeDictionary.Clear();
+            foreach (var kvp in _serialized)
+            {
+                _runtimeDictionary.TryAdd(kvp.Key, kvp.Value);
+            }
+        }
+
         private void AddOrUpdateList(TKey key, TValue value)
         {
             if (TryFindListIndexByKey(key, out var index))
