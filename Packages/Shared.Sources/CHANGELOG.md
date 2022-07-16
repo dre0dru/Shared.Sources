@@ -1,3 +1,14 @@
+# [3.3.0](https://github.com/dre0dru/Shared.Sources/compare/v3.2.0...v3.3.0) (2022-07-16)
+
+
+### Features
+
+* ability to specify `UDictionary` and `USortedDictionary` serializable backends ([0135033](https://github.com/dre0dru/Shared.Sources/commit/013503340e75e90c097c40e18c05467bf957a613))
+* added ctor to `UDictionary` that accepts `IEnumarable` ([2faeae6](https://github.com/dre0dru/Shared.Sources/commit/2faeae65728a0fa9173e8d5ba840d9ab24b46e20))
+* deserializing UDictionary in editor ([b536465](https://github.com/dre0dru/Shared.Sources/commit/b5364650df3b604704eab5d0a52bb325b49616f7))
+* serializable sorted dictionaty, hash set ([0fe7cd1](https://github.com/dre0dru/Shared.Sources/commit/0fe7cd18990c2bc08590b497a08bc993f89059e2))
+* updated collections property drawer to support custom serialization backends ([f7080d0](https://github.com/dre0dru/Shared.Sources/commit/f7080d06f0cc6fbde7f6b9b5d2200fe2499e2bd3))
+
 # [3.2.0](https://github.com/dre0dru/Shared.Sources/compare/v3.1.1...v3.2.0) (2022-07-07)
 
 
