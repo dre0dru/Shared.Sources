@@ -22,6 +22,10 @@ namespace Shared.Sources.Collections
             public SerializableDictionary(IDictionary<TKey, TValue> dict) : base(dict)
             {
             }
+            
+            public SerializableDictionary(IEnumerable<KeyValuePair<TKey, TValue>> enumerable) : base(enumerable)
+            {
+            }
 
             public SerializableDictionary(SerializationInfo info, StreamingContext context) : base(info, context)
             {
@@ -71,6 +75,19 @@ namespace Shared.Sources.Collections
         public UDictionary(IDictionary<TKey, TValue> dictionary)
         {
             _runtimeDictionary = new SerializableDictionary(dictionary);
+            
+            #if UNITY_EDITOR
+            _serialized = new List<Kvp<TKey, TValue>>(_runtimeDictionary.Select(pair => new Kvp<TKey, TValue>()
+            {
+                Key = pair.Key,
+                Value = pair.Value
+            }));
+            #endif
+        }
+        
+        public UDictionary(IEnumerable<KeyValuePair<TKey, TValue>> enumerable)
+        {
+            _runtimeDictionary = new SerializableDictionary(enumerable);
             
             #if UNITY_EDITOR
             _serialized = new List<Kvp<TKey, TValue>>(_runtimeDictionary.Select(pair => new Kvp<TKey, TValue>()
