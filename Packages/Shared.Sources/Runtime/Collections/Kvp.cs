@@ -4,8 +4,14 @@ using UnityEngine;
 
 namespace Shared.Sources.Collections
 {
+    public interface IKvp<TKey, TValue>
+    {
+        TKey Key { get; set; }
+        TValue Value { get; set; }
+    }
+
     [Serializable]
-    public struct Kvp<TKey, TValue> : IEquatable<Kvp<TKey, TValue>>
+    public struct Kvp<TKey, TValue> : IKvp<TKey, TValue>, IEquatable<Kvp<TKey, TValue>>
     {
         [SerializeField]
         private TKey _key;
