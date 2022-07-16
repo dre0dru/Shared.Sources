@@ -6,8 +6,8 @@ using UnityEngine;
 
 namespace Shared.Sources.Editor.Drawers
 {
-    [CustomPropertyDrawer(typeof(UDictionary<,>), true)]
-    [CustomPropertyDrawer(typeof(USortedDictionary<,>), true)]
+    [CustomPropertyDrawer(typeof(UDictionary<,,>), true)]
+    [CustomPropertyDrawer(typeof(USortedDictionary<,,>), true)]
     [CustomPropertyDrawer(typeof(UHashSet<>), true)]
     public class UCollectionPropertyDrawer : PropertyDrawer
     {
@@ -26,7 +26,8 @@ namespace Shared.Sources.Editor.Drawers
                     height = HelpBoxHeight
                 };
 
-                EditorGUI.HelpBox(helpBoxPos, "Nothing to draw, check ensure that Key and Value are serializable", MessageType.Error);
+                EditorGUI.HelpBox(helpBoxPos, "Nothing to draw, check ensure that Key and Value are serializable",
+                    MessageType.Error);
                 return;
             }
 
@@ -38,10 +39,11 @@ namespace Shared.Sources.Editor.Drawers
                 {
                     height = HelpBoxHeight
                 };
-            
+
                 helpBoxPos.y += EditorGUI.GetPropertyHeight(serializedList, true) + VerticalSpacing;
-                
-                EditorGUI.HelpBox(helpBoxPos, $"{property.displayName} contains duplicate keys, these values will be lost", MessageType.Error);
+
+                EditorGUI.HelpBox(helpBoxPos,
+                    $"{property.displayName} contains duplicate keys, these values will be lost", MessageType.Error);
             }
         }
 
@@ -53,7 +55,7 @@ namespace Shared.Sources.Editor.Drawers
             {
                 return LineHeight * 2;
             }
-            
+
             var height = 0f;
             height += EditorGUI.GetPropertyHeight(serializedList, true);
 
@@ -75,18 +77,31 @@ namespace Shared.Sources.Editor.Drawers
             var targetObject = property.GetObjectValue();
             return HasCollisionReflection(targetObject.GetType(), targetObject, "_hasCollisions");
         }
-        
+
         private static bool HasCollisionReflection(Type type, object instance, string fieldName)
         {
-            BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
-                                     | BindingFlags.Static;
-            FieldInfo field = type.GetField(fieldName, bindFlags);
+            var bindingFlags = BindingFlags.Instance | BindingFlags.Public |
+                               BindingFlags.NonPublic | BindingFlags.Static;
+
+            FieldInfo field = null;
+
+            while (type != null)
+            {
+                field = type.GetField(fieldName, bindingFlags);
+
+                if (field != null)
+                {
+                    break;
+                }
+
+                type = type.BaseType;
+            }
 
             if (field == null)
             {
                 return false;
             }
-            
+
             return (bool)field.GetValue(instance);
         }
     }
