@@ -10,8 +10,9 @@ namespace Shared.Sources.Collections
 {
     [Serializable]
     [DebuggerDisplay("Count = {Count}")]
-    public class UDictionary<TKey, TValue> : IDictionary<TKey, TValue>, ISerializationCallbackReceiver,
+    public class UDictionary<TKey, TValue, TKvp> : IDictionary<TKey, TValue>, ISerializationCallbackReceiver,
         IDeserializationCallback, ISerializable
+        where TKvp: IKvp<TKey, TValue>, new()
     {
         protected class SerializableDictionary : Dictionary<TKey, TValue>
         {
@@ -33,7 +34,7 @@ namespace Shared.Sources.Collections
         }
 
         [SerializeField]
-        private List<Kvp<TKey, TValue>> _serialized;
+        private List<TKvp> _serialized;
         
         private SerializableDictionary _runtimeDictionary;
 
@@ -68,7 +69,7 @@ namespace Shared.Sources.Collections
             _runtimeDictionary = new SerializableDictionary();
             
             #if UNITY_EDITOR
-            _serialized = new List<Kvp<TKey, TValue>>();
+            _serialized = new List<TKvp>();
             #endif
         }
 
@@ -77,11 +78,7 @@ namespace Shared.Sources.Collections
             _runtimeDictionary = new SerializableDictionary(dictionary);
             
             #if UNITY_EDITOR
-            _serialized = new List<Kvp<TKey, TValue>>(_runtimeDictionary.Select(pair => new Kvp<TKey, TValue>()
-            {
-                Key = pair.Key,
-                Value = pair.Value
-            }));
+            SerializedFromRuntime();
             #endif
         }
         
@@ -90,11 +87,7 @@ namespace Shared.Sources.Collections
             _runtimeDictionary = new SerializableDictionary(enumerable);
             
             #if UNITY_EDITOR
-            _serialized = new List<Kvp<TKey, TValue>>(_runtimeDictionary.Select(pair => new Kvp<TKey, TValue>()
-            {
-                Key = pair.Key,
-                Value = pair.Value
-            }));
+            SerializedFromRuntime();
             #endif
         }
 
@@ -106,11 +99,7 @@ namespace Shared.Sources.Collections
             _runtimeDictionary = new SerializableDictionary(info, context);
             
             #if UNITY_EDITOR
-            _serialized = new List<Kvp<TKey, TValue>>(_runtimeDictionary.Select(pair => new Kvp<TKey, TValue>()
-            {
-                Key = pair.Key,
-                Value = pair.Value
-            }));
+            SerializedFromRuntime();
             #endif
         }
 
@@ -219,11 +208,11 @@ namespace Shared.Sources.Collections
 
         private void OnBeforeSerialize()
         {
-            _serialized = new List<Kvp<TKey, TValue>>(Dictionary.Count);
+            _serialized = new List<TKvp>(Dictionary.Count);
 
             foreach (var kvp in Dictionary)
             {
-                _serialized.Add(new Kvp<TKey, TValue>()
+                _serialized.Add(new TKvp()
                 {
                     Key = kvp.Key,
                     Value = kvp.Value
@@ -248,6 +237,15 @@ namespace Shared.Sources.Collections
         #pragma warning disable CS0414
         private bool _hasCollisions;
         #pragma warning restore CS0414
+        
+        private void SerializedFromRuntime()
+        {
+            _serialized = new List<TKvp>(_runtimeDictionary.Select(pair => new TKvp()
+            {
+                Key = pair.Key,
+                Value = pair.Value
+            }));
+        }
         
         private void CheckForCollisions()
         {
@@ -278,7 +276,7 @@ namespace Shared.Sources.Collections
         {
             if (TryFindListIndexByKey(key, out var index))
             {
-                _serialized[index] = new Kvp<TKey, TValue>
+                _serialized[index] = new TKvp
                 {
                     Key = key,
                     Value = value
@@ -286,7 +284,7 @@ namespace Shared.Sources.Collections
             }
             else
             {
-                _serialized.Add(new Kvp<TKey, TValue>
+                _serialized.Add(new TKvp
                 {
                     Key = key,
                     Value = value
@@ -301,5 +299,26 @@ namespace Shared.Sources.Collections
             return index != -1;
         }
         #endif
+    }
+
+    [Serializable]
+    [DebuggerDisplay("Count = {Count}")]
+    public class UDictionary<TKey, TValue> : UDictionary<TKey, TValue, Kvp<TKey, TValue>>
+    {
+        public UDictionary()
+        {
+        }
+
+        public UDictionary(IDictionary<TKey, TValue> dictionary) : base(dictionary)
+        {
+        }
+
+        public UDictionary(IEnumerable<KeyValuePair<TKey, TValue>> enumerable) : base(enumerable)
+        {
+        }
+
+        protected UDictionary(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
     }
 }
