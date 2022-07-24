@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace Shared.Sources.Extensions
 {
@@ -19,6 +21,20 @@ namespace Shared.Sources.Extensions
             }
 
             return result;
+        }
+
+        public static void ExecuteDownwards<TComponent>(this Component root, Action<TComponent> action,
+            bool includeInactive = false)
+            where TComponent : Component
+        {
+            root.gameObject.ExecuteDownwards<TComponent>(action, includeInactive);
+        }
+        
+        public static void ExecuteUpwards<TComponent>(this Component root, Action<TComponent> action,
+            bool includeInactive = false)
+            where TComponent : Component
+        {
+            root.gameObject.ExecuteUpwards<TComponent>(action, includeInactive);
         }
     }
 }
