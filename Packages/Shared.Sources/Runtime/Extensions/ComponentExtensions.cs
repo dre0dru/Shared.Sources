@@ -11,7 +11,7 @@ namespace Shared.Sources.Extensions
         {
             return component.gameObject.AddComponent<T>();
         }
-        
+
         public static T GetOrAddComponent<T>(this Component component)
             where T : Component
         {
@@ -25,26 +25,26 @@ namespace Shared.Sources.Extensions
 
         public static void ExecuteDownwards<TComponent>(this Component root, Action<TComponent> action,
             bool includeInactive = false)
-            where TComponent : Component
-        {
+            where TComponent : Component =>
             root.gameObject.ExecuteDownwards<TComponent>(action, includeInactive);
-        }
-        
+
         public static void ExecuteUpwards<TComponent>(this Component root, Action<TComponent> action,
             bool includeInactive = false)
-            where TComponent : Component
-        {
+            where TComponent : Component =>
             root.gameObject.ExecuteUpwards<TComponent>(action, includeInactive);
-        }
 
-        public static void Enable(this Behaviour behaviour)
+        public static TBehaviour Enable<TBehaviour>(this TBehaviour behaviour)
+            where TBehaviour : Behaviour
         {
             behaviour.enabled = true;
+            return behaviour;
         }
 
-        public static void Disable(this Behaviour behaviour)
+        public static TBehaviour Disable<TBehaviour>(this TBehaviour behaviour)
+            where TBehaviour : Behaviour
         {
             behaviour.enabled = false;
+            return behaviour;
         }
     }
 }
