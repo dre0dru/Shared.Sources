@@ -36,5 +36,15 @@ namespace Shared.Sources.Extensions
         {
             root.gameObject.ExecuteUpwards<TComponent>(action, includeInactive);
         }
+
+        public static void Enable(this Behaviour behaviour)
+        {
+            behaviour.enabled = true;
+        }
+
+        public static void Disable(this Behaviour behaviour)
+        {
+            behaviour.enabled = false;
+        }
     }
 }
