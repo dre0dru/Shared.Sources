@@ -16,5 +16,74 @@ namespace Shared.Sources.Collections
 
             return collection;
         }
+
+        //TODO code duplication: https://stackoverflow.com/questions/12838122/ilistt-and-ireadonlylistt
+        public static bool TryMoveNextCircular<T>(this IList<T> list, ref int index, out T next)
+        {
+            if (list.Count == 0)
+            {
+                next = default;
+                return false;
+            }
+            
+            index = (index + 1) % list.Count;
+
+            next = list[index];
+            return true;
+        }
+
+        public static bool TryMovePrevCircular<T>(this IList<T> list, ref int index, out T next)
+        {
+            if (list.Count == 0)
+            {
+                next = default;
+                return false;
+            }
+
+            index -= 1;
+            if (index < 0)
+            {
+                index = list.Count - 1;
+            }
+            
+            index %= list.Count;
+            
+            next = list[index];
+            return true;
+        }
+
+        public static bool TryMoveNextCircular<T>(this IReadOnlyList<T> list, ref int index, out T next)
+        {
+            if (list.Count == 0)
+            {
+                next = default;
+                return false;
+            }
+            
+            index = (index + 1) % list.Count;
+
+            next = list[index];
+            return true;
+        }
+
+        public static bool TryMovePrevCircular<T>(this IReadOnlyList<T> list, ref int index, out T next)
+        {
+            if (list.Count == 0)
+            {
+                next = default;
+                return false;
+            }
+
+            index -= 1;
+            if (index < 0)
+            {
+                index = list.Count - 1;
+            }
+            
+            index %= list.Count;
+            
+            next = list[index];
+            return true;
+        }
     }
 }
